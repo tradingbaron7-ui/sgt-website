@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate to SGT - Sunflower Gimbal Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --sunflower-gold: #FFB81C;
+            --deep-gold: #E89C31;
+            --forest-green: #2C5F2D;
+            --earth-brown: #6B4423;
+            --cream: #FFF8E7;
+            --dark: #1a1a1a;
+        }
+        
+        body {
+            font-family: 'Work Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--cream) 0%, #fff 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: var(--forest-green);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--earth-brown);
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .donation-methods {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .method-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .method-card:nth-child(1) { animation-delay: 0.1s; }
+        .method-card:nth-child(2) { animation-delay: 0.2s; }
+        .method-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--sunflower-gold);
+        }
+        
+        .method-icon {
+            font-size: 2.5rem;
+        }
+        
+        .method-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--earth-brown);
+        }
+        
+        .method-subtitle {
+            color: var(--forest-green);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .detail-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .detail-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: var(--cream);
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        
+        .detail-row:hover {
+            background: #fff8dc;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .detail-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--dark);
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--forest-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .copy-btn:hover {
+            background: #1f4520;
+            transform: translateY(-2px);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copied {
+            background: var(--sunflower-gold) !important;
+        }
+        
+        .qr-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            border: 2px dashed var(--sunflower-gold);
+        }
+        
+        .qr-placeholder {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            background: var(--cream);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #999;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--forest-green);
+        }
+        
+        .instructions h3 {
+            color: var(--forest-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .instructions ol {
+            margin-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .warning strong {
+            color: #856404;
+        }
+        
+        .confirmation-note {
+            background: linear-gradient(135deg, #fff8e7 0%, #ffe4b5 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: center;
+            border: 2px solid var(--sunflower-gold);
+        }
+        
+        .confirmation-note h3 {
+            color: var(--earth-brown);
+            margin-bottom: 0.8rem;
+        }
+        
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--forest-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .contact-button:hover {
+            background: #1f4520;
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .method-card {
+                padding: 1.5rem;
+            }
+            
+            .detail-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="sgt_crowdfunding_website.html" class="back-link">← Back to Main Site</a>
+        
+        <div class="header">
+            <h1>🌻 Support SGT</h1>
+            <p class="subtitle">Choose your preferred donation method to help us reach our £30,000 goal</p>
+        </div>
+        
+        <div class="donation-methods">
+            <!-- Bank Transfer -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">🏦</div>
+                    <div>
+                        <div class="method-title">Bank Transfer</div>
+                        <div class="method-subtitle">Direct UK Bank Transfer (Recommended)</div>
+                    </div>
+                </div>
+                
+                <div class="detail-grid">
+                    <div class="detail-row">
+                        <div class="detail-label">Account Name:</div>
+                        <div class="detail-value">I S Barker</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Sort Code:</div>
+                        <div class="detail-value">09-01-30</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Account Number:</div>
+                        <div class="detail-value">11324979</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Bank:</div>
+                        <div class="detail-value">Santander UK</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <button class="copy-btn" onclick="copyBankDetails()">
+                        📋 Copy All Bank Details
+                    </button>
+                </div>
+                
+                <div class="instructions">
+                    <h3>📝 How to Send a Bank Transfer:</h3>
+                    <ol>
+                        <li>Open your banking app or online banking</li>
+                        <li>Select "Make a Payment" or "Send Money"</li>
+                        <li>Enter the sort code: <strong>09-01-30</strong></li>
+                        <li>Enter the account number: <strong>11324979</strong></li>
+                        <li>Add your investment amount</li>
+                        <li>In the reference field, add: <strong>SGT-[Your Name]</strong></li>
+                        <li>Review and confirm the payment</li>
+                    </ol>
+                </div>
+                
+                <div class="warning">
+                    <strong>⚡ Important:</strong> Please include your name in the payment reference so we can properly track and acknowledge your contribution!
+                </div>
+            </div>
+            
+            <!-- Bitcoin/Crypto -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">₿</div>
+                    <div>
+                        <div class="method-title">Bitcoin (BTC)</div>
+                        <div class="method-subtitle">Cryptocurrency Donation</div>
+                    </div>
+                </div>
+                
+                <p style="margin-bottom: 1.5rem; color: #666;">
+                    Send Bitcoin directly to our secure wallet address. Perfect for international supporters or those who prefer crypto payments.
+                </p>
+                
+                <div class="detail-grid">
+                    <div class="detail-row" style="grid-template-columns: 1fr;">
+                        <div class="detail-label" style="margin-bottom: 0.5rem;">Bitcoin Address:</div>
+                        <div class="detail-value" style="font-size: 0.85rem; line-height: 1.5;">
+                            bc1qatmk5qlarmdz9le97fyfhqzss0tf0g7nc95fc3
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <button class="copy-btn" onclick="copyBitcoinAddress()">
+                        📋 Copy Bitcoin Address
+                    </button>
+                </div>
+                
+                <div class="qr-container">
+                    <div class="qr-placeholder">
+                        Scan with your Bitcoin wallet app
+                        <br><br>
+                        <small>(Generate QR code at blockchain.com/qr)</small>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>🪙 How to Send Bitcoin:</h3>
+                    <ol>
+                        <li>Open your Bitcoin wallet (Coinbase, Trust Wallet, etc.)</li>
+                        <li>Select "Send" or "Transfer"</li>
+                        <li>Paste the Bitcoin address above</li>
+                        <li>Enter the amount you wish to contribute</li>
+                        <li>Review the transaction fee</li>
+                        <li>Confirm and send the transaction</li>
+                    </ol>
+                </div>
+                
+                <div class="warning">
+                    <strong>⚡ Important:</strong> Bitcoin transactions can take 10-60 minutes to confirm. We'll acknowledge your contribution once it's confirmed on the blockchain.
+                </div>
+            </div>
+            
+            <!-- Email Confirmation -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">✉️</div>
+                    <div>
+                        <div class="method-title">Confirm Your Donation</div>
+                        <div class="method-subtitle">Let us know you've contributed</div>
+                    </div>
+                </div>
+                
+                <div class="confirmation-note">
+                    <h3>📧 After You Donate</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Please send us a quick email to confirm your contribution and receive your backer perks!
+                    </p>
+                    <a href="mailto:ittrader@protonmail.com?subject=SGT Donation Confirmation&body=Hi Iain,%0D%0A%0D%0AI've just sent a donation to SGT:%0D%0A%0D%0AAmount: £______%0D%0AMethod: [Bank Transfer / Bitcoin]%0D%0ADate: ______%0D%0A%0D%0AInvestment Tier: [Seed Supporter £100 / Growth Partner £500 / Founding Investor £2000+]%0D%0A%0D%0APlease confirm receipt and let me know next steps.%0D%0A%0D%0AThank you!%0D%0A%0D%0AName: ______%0D%0AEmail: ______%0D%0APhone: ______" 
+                       class="contact-button">
+                        Send Confirmation Email
+                    </a>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        Include: Your name, amount, payment method, and preferred investment tier
+                    </p>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: var(--cream); border-radius: 10px;">
+                    <h3 style="color: var(--earth-brown); margin-bottom: 1rem;">💬 Questions?</h3>
+                    <p style="margin-bottom: 1rem;">Contact Iain Barker directly:</p>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div>📧 <strong>Email:</strong> ittrader@protonmail.com</div>
+                        <div>📱 <strong>Phone:</strong> 07376 909 228</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--earth-brown); margin-bottom: 1rem;">
+                Thank You for Your Support! 🙏
+            </h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">
+                Every contribution brings us closer to automated manufacturing and making affordable solar tracking available to everyone. Together, we're building the future of renewable energy!
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function copyBankDetails() {
+            const text = `SGT Donation - Bank Details
+            
+Account Name: I S Barker
+Sort Code: 09-01-30
+Account Number: 11324979
+Bank: Santander UK
+
+Please include "SGT-[Your Name]" in the payment reference.`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        function copyBitcoinAddress() {
+            const address = 'bc1qatmk5qlarmdz9le97fyfhqzss0tf0g7nc95fc3';
+            
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
