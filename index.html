@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunflower Gimbal Tracker - Join the Solar Revolution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --sunflower-gold: #FFB81C;
+            --deep-gold: #E89C31;
+            --forest-green: #2C5F2D;
+            --earth-brown: #6B4423;
+            --sky-blue: #87CEEB;
+            --cream: #FFF8E7;
+            --dark: #1a1a1a;
+        }
+        
+        body {
+            font-family: 'Work Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+        
+        /* Organic flowing header */
+        header {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--sunflower-gold) 0%, var(--deep-gold) 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Animated sunflower petals background */
+        .petals {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .petal {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(ellipse at center, rgba(255, 184, 28, 0.3), transparent);
+            border-radius: 50% 0 50% 0;
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        
+        .petal:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .petal:nth-child(2) { top: 60%; left: 80%; animation-delay: 3s; }
+        .petal:nth-child(3) { top: 80%; left: 20%; animation-delay: 6s; }
+        .petal:nth-child(4) { top: 30%; left: 70%; animation-delay: 9s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 3px 3px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--forest-green);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 5px rgba(255,255,255,0.5);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--forest-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            animation: slideDown 0.5s ease-out 0.5s forwards;
+        }
+        
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-gold);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--deep-gold);
+        }
+        
+        /* CTA Button */
+        .cta-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--forest-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(44, 95, 45, 0.4);
+        }
+        
+        .cta-btn:hover {
+            background: #1f4520;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(44, 95, 45, 0.6);
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--earth-brown);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        /* Problem & Solution */
+        .problem-solution {
+            background: white;
+            border-radius: 30px;
+            padding: 4rem;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+            margin-bottom: 4rem;
+        }
+        
+        .split-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+        
+        .content-box {
+            padding: 2rem;
+            border-radius: 20px;
+        }
+        
+        .problem-box {
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+            border-left: 5px solid #c33;
+        }
+        
+        .solution-box {
+            background: linear-gradient(135deg, #efe 0%, #dfd 100%);
+            border-left: 5px solid var(--forest-green);
+        }
+        
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Product Showcase */
+        .product-showcase {
+            background: var(--forest-green);
+            color: white;
+            border-radius: 30px;
+            padding: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--sunflower-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Crowdfunding Section */
+        .crowdfunding {
+            background: linear-gradient(135deg, var(--sunflower-gold) 0%, var(--deep-gold) 100%);
+            border-radius: 30px;
+            padding: 5rem;
+            text-align: center;
+            box-shadow: 0 15px 60px rgba(232, 156, 49, 0.4);
+        }
+        
+        .crowdfunding h2 {
+            color: white;
+        }
+        
+        .funding-progress {
+            max-width: 600px;
+            margin: 3rem auto;
+        }
+        
+        .progress-bar-container {
+            background: rgba(255,255,255,0.3);
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .progress-bar {
+            background: var(--forest-green);
+            height: 100%;
+            width: 0%;
+            border-radius: 20px;
+            transition: width 2s ease-out;
+            animation: fillBar 2s ease-out 1s forwards;
+        }
+        
+        @keyframes fillBar {
+            to {
+                width: 28.3%; /* £8,500 / £30,000 */
+            }
+        }
+        
+        .progress-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .funding-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 3rem;
+        }
+        
+        .funding-stat {
+            text-align: center;
+        }
+        
+        .funding-stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+        
+        .funding-stat-label {
+            color: var(--forest-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Investment Tiers */
+        .investment-tiers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tier {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .tier:hover {
+            transform: scale(1.05);
+            border-color: var(--forest-green);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .tier-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--earth-brown);
+            margin-bottom: 1rem;
+        }
+        
+        .tier-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--forest-green);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tier-perks {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        
+        .tier-perks li {
+            padding: 0.5rem 0;
+            color: #333;
+        }
+        
+        .tier-perks li::before {
+            content: "✓ ";
+            color: var(--forest-green);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .tier-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--forest-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .tier-btn:hover {
+            background: #1f4520;
+        }
+        
+        .featured-tier {
+            background: linear-gradient(135deg, #fff8e7 0%, #ffe4b5 100%);
+            border-color: var(--deep-gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--deep-gold);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        /* Why Invest */
+        .why-invest {
+            background: white;
+            border-radius: 30px;
+            padding: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .reason {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .reason-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+        
+        .reason-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--earth-brown);
+        }
+        
+        /* Impact Section */
+        .impact {
+            background: var(--sky-blue);
+            border-radius: 30px;
+            padding: 5rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+        
+        .impact-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+        }
+        
+        .impact-stat {
+            text-align: center;
+        }
+        
+        .impact-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .impact-label {
+            color: var(--forest-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* Team Section */
+        .team {
+            text-align: center;
+        }
+        
+        .founder {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .founder-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--earth-brown);
+            margin-bottom: 0.5rem;
+        }
+        
+        .founder-title {
+            color: var(--deep-gold);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--forest-green);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .split-content,
+            .features-grid,
+            .investment-tiers,
+            .reasons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            section {
+                padding: 4rem 2rem;
+            }
+        }
+        
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🌻 SGT</div>
+        <ul class="nav-links">
+            <li><a href="#product">Product</a></li>
+            <li><a href="#invest">Invest</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="#team">Team</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="petals">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Sunflower Gimbal Tracker</h1>
+            <p class="tagline">Nature-Inspired Solar Technology That Follows the Sun</p>
+            <a href="#invest" class="cta-btn">Join the Revolution</a>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">3000W</span>
+                    <span class="stat-label">Peak Power</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">60-80%</span>
+                    <span class="stat-label">More Energy</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">£2,395</span>
+                    <span class="stat-label">Starting Price</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem & Solution -->
+    <section class="fade-in">
+        <div class="problem-solution">
+            <h2>The Energy Challenge</h2>
+            <div class="split-content">
+                <div class="content-box problem-box">
+                    <h3>🔴 The Problem</h3>
+                    <p><strong>Fixed solar panels waste 40-60% of available sunlight.</strong></p>
+                    <p>Traditional panels face one direction all day while the sun moves across the sky. They overheat in summer, losing efficiency. Existing tracking systems cost £15,000+ putting them out of reach for most people.</p>
+                    <p>Homes, businesses, and motorhomes need affordable, efficient solar that works in limited space.</p>
+                </div>
+                <div class="content-box solution-box">
+                    <h3>🟢 Our Solution</h3>
+                    <p><strong>Biomimetic design inspired by nature's perfect solar collector.</strong></p>
+                    <p>Like a real sunflower, our SGT tracks the sun on two axes throughout the day. Integrated water cooling keeps panels at optimal temperature while generating hot water. 10 curved petals fold for transport and deploy to capture maximum energy.</p>
+                    <p>All at a fraction of the cost of traditional trackers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section id="product" class="fade-in">
+        <div class="product-showcase">
+            <h2 style="color: white;">Revolutionary Design</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.2rem;">
+                Our Sunflower Gimbal Tracker combines dual-axis sun tracking, water cooling, and genuine sunflower petal design into one elegant system.
+            </p>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">☀️</div>
+                    <span class="feature-value">+30-50%</span>
+                    <p><strong>Energy Output</strong><br>vs. fixed panels through intelligent tracking</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💧</div>
+                    <span class="feature-value">+10-15%</span>
+                    <p><strong>Cooling Boost</strong><br>Water cooling system maintains efficiency</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌻</div>
+                    <span class="feature-value">10 Petals</span>
+                    <p><strong>Modular Design</strong><br>300W per petal, 3000W total system</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📏</div>
+                    <span class="feature-value">1.8m</span>
+                    <p><strong>Compact Size</strong><br>Folds to 40% for easy transport</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔧</div>
+                    <span class="feature-value">1.5-3m</span>
+                    <p><strong>Adjustable</strong><br>Telescoping leg with gimbal mount</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <span class="feature-value">3-5 years</span>
+                    <p><strong>ROI Payback</strong><br>Pays for itself through energy savings</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crowdfunding Section -->
+    <section id="invest" class="fade-in">
+        <div class="crowdfunding">
+            <h2>Be Part of the Solar Revolution</h2>
+            <p style="font-size: 1.3rem; max-width: 800px; margin: 0 auto 3rem; color: var(--forest-green);">
+                We're raising <strong>£30,000</strong> to purchase two advanced robotic arms for automated manufacturing. Your investment helps us scale production and bring affordable solar tracking to everyone.
+            </p>
+            
+            <div class="funding-progress">
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
+                    <div class="progress-label">£8,500 raised of £30,000</div>
+                </div>
+            </div>
+            
+            <div class="funding-stats">
+                <div class="funding-stat">
+                    <span class="funding-stat-value">28%</span>
+                    <span class="funding-stat-label">Funded</span>
+                </div>
+                <div class="funding-stat">
+                    <span class="funding-stat-value">2</span>
+                    <span class="funding-stat-label">Backers</span>
+                </div>
+                <div class="funding-stat">
+                    <span class="funding-stat-value">45</span>
+                    <span class="funding-stat-label">Days Left</span>
+                </div>
+            </div>
+            
+            <h3 style="color: white; margin-top: 4rem; margin-bottom: 2rem; font-size: 2rem;">Choose Your Investment Level</h3>
+            
+            <div class="investment-tiers">
+                <div class="tier">
+                    <div class="tier-name">Seed Supporter</div>
+                    <div class="tier-amount">£100</div>
+                    <ul class="tier-perks">
+                        <li>Early backer recognition</li>
+                        <li>Quarterly progress updates</li>
+                        <li>10% discount on future purchase</li>
+                        <li>SGT community access</li>
+                    </ul>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
+                </div>
+                
+                <div class="tier featured-tier">
+                    <div class="featured-badge">POPULAR</div>
+                    <div class="tier-name">Growth Partner</div>
+                    <div class="tier-amount">£500</div>
+                    <ul class="tier-perks">
+                        <li>All Seed Supporter perks</li>
+                        <li>20% discount on SGT-250 unit</li>
+                        <li>Name on founder's wall</li>
+                        <li>Exclusive factory tour invite</li>
+                        <li>Limited edition supporter badge</li>
+                    </ul>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
+                </div>
+                
+                <div class="tier">
+                    <div class="tier-name">Founding Investor</div>
+                    <div class="tier-amount">£2,000+</div>
+                    <ul class="tier-perks">
+                        <li>All Growth Partner perks</li>
+                        <li>FREE SGT-250 unit (£1,595 value)</li>
+                        <li>Priority installation scheduling</li>
+                        <li>Direct line to founder</li>
+                        <li>Annual shareholder reports</li>
+                        <li>Potential equity participation</li>
+                    </ul>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
+                </div>
+            </div>
+            
+            <p style="margin-top: 3rem; color: var(--forest-green); font-weight: 600;">
+                💡 Custom investment amounts welcome! Contact us to discuss larger contributions or equity opportunities.
+            </p>
+        </div>
+    </section>
+
+    <!-- Why Invest -->
+    <section class="fade-in">
+        <div class="why-invest">
+            <h2>Why Invest in SGT?</h2>
+            <div class="reasons-grid">
+                <div class="reason">
+                    <div class="reason-icon">🚀</div>
+                    <div class="reason-content">
+                        <h4>Massive Market Opportunity</h4>
+                        <p>£13.4B UK solar market growing 20% annually. Motorhomes, homes, and businesses all need better solar solutions.</p>
+                    </div>
+                </div>
+                
+                <div class="reason">
+                    <div class="reason-icon">🏆</div>
+                    <div class="reason-content">
+                        <h4>Unique Technology</h4>
+                        <p>Only system combining tracking, concentration, AND cooling. Design patents pending on petal geometry and cooling integration.</p>
+                    </div>
+                </div>
+                
+                <div class="reason">
+                    <div class="reason-icon">💰</div>
+                    <div class="reason-content">
+                        <h4>Strong Unit Economics</h4>
+                        <p>36-50% gross margins, £1,595-£3,495 price point. Clear path to profitability with proven demand.</p>
+                    </div>
+                </div>
+                
+                <div class="reason">
+                    <div class="reason-icon">🌍</div>
+                    <div class="reason-content">
+                        <h4>Environmental Impact</h4>
+                        <p>Every SGT unit saves 2-3 tons of CO₂ annually. Be part of the clean energy transition that matters.</p>
+                    </div>
+                </div>
+                
+                <div class="reason">
+                    <div class="reason-icon">🏭</div>
+                    <div class="reason-content">
+                        <h4>Scalable Manufacturing</h4>
+                        <p>Robot arm automation enables rapid scaling. Your investment directly accelerates production capacity.</p>
+                    </div>
+                </div>
+                
+                <div class="reason">
+                    <div class="reason-icon">🇬🇧</div>
+                    <div class="reason-content">
+                        <h4>Local Production</h4>
+                        <p>UK-based manufacturing with local supply chain. Quality control, faster delivery, and supporting British innovation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="fade-in">
+        <div class="impact">
+            <h2>Our Environmental Impact</h2>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">
+                Every SGT unit installed is a step toward a cleaner future. Here's what we'll achieve together:
+            </p>
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <span class="impact-number">2,400</span>
+                    <span class="impact-label">Units by Year 3</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="impact-number">7,200</span>
+                    <span class="impact-label">Tons CO₂ Saved/Year</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="impact-number">7.2 GWh</span>
+                    <span class="impact-label">Clean Energy Generated</span>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.1rem; color: var(--forest-green);">
+                <strong>That's equivalent to planting 330,000 trees or taking 1,500 cars off the road!</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="fade-in">
+        <h2>Meet the Founder</h2>
+        <div class="founder">
+            <div class="founder-name">Iain Barker</div>
+            <div class="founder-title">Founder & CEO</div>
+            <p style="margin-bottom: 2rem; color: #555;">
+                Combining expertise in renewable energy systems with a passion for biomimetic design, Iain is leading the revolution in accessible solar technology. With a vision to bring affordable, efficient solar tracking to every home and vehicle, SGT represents years of research and development in sustainable energy solutions.
+            </p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d7469696f7c79786f5d6d6f72697273707c7471337e7270">[email&#160;protected]</a>
+                </div>
+                <div class="contact-item">
+                    📱 07376 909 228
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="fade-in" style="text-align: center; padding: 4rem 2rem;">
+        <h2 style="font-size: 3rem; margin-bottom: 2rem;">Ready to Join Us?</h2>
+        <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 3rem; color: #555;">
+            Help us build the future of solar energy. Every contribution brings us closer to automated manufacturing and widespread adoption.
+        </p>
+        <a href="sgt_donate.html" class="cta-btn" style="font-size: 1.3rem; padding: 1.5rem 4rem;">Invest in SGT Today</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="color: var(--sunflower-gold); margin-bottom: 1rem;">🌻 Sunflower Gimbal Tracker</div>
+        <p>Bringing affordable, efficient solar tracking to everyone.</p>
+        <p style="margin-top: 1rem; opacity: 0.7;">&copy; 2026 Sunflower Gimbal Tracker. All rights reserved.</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el =>

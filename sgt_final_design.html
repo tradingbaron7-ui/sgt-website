@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGT Final Design - Genuine Sunflower Petals</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow: hidden;
+        }
+        #container { width: 100vw; height: 100vh; position: relative; }
+        #canvas { width: 100%; height: 100%; display: block; }
+        
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 22px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            max-width: 380px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 21px;
+            margin-bottom: 16px;
+            color: #ffd700;
+            text-shadow: 0 2px 15px rgba(255, 215, 0, 0.6);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .spec-panel {
+            background: rgba(255, 215, 0, 0.08);
+            padding: 14px;
+            border-radius: 10px;
+            margin: 14px 0;
+            border-left: 4px solid #ffd700;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+        
+        .spec-title {
+            font-weight: 700;
+            color: #ffd700;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .control-group { margin-bottom: 16px; }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 11px;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(243, 156, 18, 0.7);
+        }
+        
+        button.success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.5);
+        }
+        
+        button.secondary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.8);
+        }
+        
+        #info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 18px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            max-width: 350px;
+            font-size: 11px;
+            line-height: 1.8;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        #stats {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            min-width: 340px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 11px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .stat-label { color: #ffd700; font-weight: 600; }
+        .stat-value { color: #fff; font-weight: 700; }
+        
+        .highlight { color: #27ae60; font-weight: 800; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        
+        <div id="controls">
+            <h1>🌻 SGT Final Design</h1>
+            
+            <div class="spec-panel">
+                <div class="spec-title">System Specifications</div>
+                <strong>Total Power:</strong> 3000W (10×300W)<br>
+                <strong>Design:</strong> Genuine sunflower petals<br>
+                <strong>Diameter:</strong> 1.8m deployed<br>
+                <strong>Height:</strong> 1.5-3m adjustable<br>
+                <strong>Weight:</strong> 45kg complete
+            </div>
+            
+            <div class="control-group">
+                <button id="startBtn" class="success">▶ Start Assembly</button>
+                <button id="pauseBtn">⏸ Pause</button>
+                <button id="resetBtn" class="secondary">↺ Reset</button>
+            </div>
+            
+            <div class="control-group">
+                <label>Speed Control</label>
+                <input type="range" id="speedSlider" min="1" max="100" value="40">
+            </div>
+            
+            <div class="control-group">
+                <label>View & Features</label>
+                <button id="viewTopBtn">⬆ Top View</button>
+                <button id="viewSideBtn">↔ Side View</button>
+                <button id="toggleConeBtn">🌀 Toggle Cone</button>
+                <button id="togglePipesBtn">💧 Toggle Pipes</button>
+                <button id="foldBtn">📦 Fold/Deploy</button>
+                <button id="adjustHeightBtn">📏 Adjust Height</button>
+            </div>
+        </div>
+        
+        <div id="stats">
+            <h2 style="font-size: 15px; margin-bottom: 14px; color: #ffd700;">Assembly Status</h2>
+            <div class="stat-row">
+                <span class="stat-label">Phase:</span>
+                <span class="stat-value" id="currentPhase">Ready</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Task:</span>
+                <span class="stat-value" id="currentTask">Press Start</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Central Cone:</span>
+                <span class="stat-value" id="coneStatus">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Petals Mounted:</span>
+                <span class="stat-value" id="petalsStatus">0/10</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Edge Pipes:</span>
+                <span class="stat-value" id="pipesStatus">0/10</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Power Output:</span>
+                <span class="stat-value highlight" id="powerOutput">0W / 3000W</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Gimbal:</span>
+                <span class="stat-value" id="gimbalStatus">—</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Leg Height:</span>
+                <span class="stat-value" id="heightStatus">1.5m</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Status:</span>
+                <span class="stat-value" id="deployStatus">Folded</span>
+            </div>
+        </div>
+        
+        <div id="info">
+            <h2 style="font-size: 13px; margin-bottom: 12px; color: #ffd700;">Design Features</h2>
+            <p style="margin-bottom: 12px;"><strong>Genuine Sunflower Design</strong></p>
+            <p style="font-size: 10px; line-height: 1.9;">
+                ✓ <strong>Organic Petal Shape:</strong> Natural sunflower curves<br>
+                ✓ <strong>Minimal Gaps:</strong> Petals fit together tightly<br>
+                ✓ <strong>Wind Flow:</strong> Small gaps allow air through<br>
+                ✓ <strong>Edge Cooling:</strong> Black pipes around petals<br>
+                ✓ <strong>Compact Cone:</strong> Smaller central manifold<br>
+                ✓ <strong>Telescoping Leg:</strong> 1.5m-3m adjustable<br>
+                ✓ <strong>Gimbal Mount:</strong> 340° rotation, 90° tilt<br>
+                ✓ <strong>Folds to 40%:</strong> Easy transport
+            </p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Scene
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.Fog(0x87CEEB, 2000, 4000);
+        
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 5000);
+        camera.position.set(1000, 800, 1000);
+        camera.lookAt(0, 0, 0);
+        
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        
+        const sunLight = new THREE.DirectionalLight(0xffffee, 1.5);
+        sunLight.position.set(600, 1000, 500);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 2048;
+        sunLight.shadow.mapSize.height = 2048;
+        scene.add(sunLight);
+        
+        const skyLight = new THREE.HemisphereLight(0x87CEEB, 0x8B7355, 0.6);
+        scene.add(skyLight);
+        
+        // Ground
+        const groundGeom = new THREE.PlaneGeometry(3000, 3000);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0x8B7355, roughness: 0.9 });
+        const ground = new THREE.Mesh(groundGeom, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -500;
+        ground.receiveShadow = true;
+        scene.add(ground);
+        
+        // Grid
+        const grid = new THREE.GridHelper(2000, 100, 0x666666, 0x999999);
+        grid.position.y = -499;
+        scene.add(grid);
+        
+        // Materials
+        const silverFrameMat = new THREE.MeshStandardMaterial({
+            color: 0xC0C0C0,
+            metalness: 0.8,
+            roughness: 0.25
+        });
+        
+        const solarCellMat = new THREE.MeshStandardMaterial({
+            color: 0x1a237e,
+            metalness: 0.5,
+            roughness: 0.5,
+            emissive: 0x283593,
+            emissiveIntensity: 0.4
+        });
+        
+        const blackPipeMat = new THREE.MeshStandardMaterial({
+            color: 0x0a0a0a,
+            metalness: 0.95,
+            roughness: 0.15
+        });
+        
+        const grayHubMat = new THREE.MeshStandardMaterial({
+            color: 0x424242,
+            metalness: 0.9,
+            roughness: 0.1
+        });
+        
+        // Components
+        let centralCone, gimbalJoint, telescopingLeg, baseplate;
+        const petals = [];
+        const edgePipes = [];
+        let coneVisible = true;
+        let pipesVisible = true;
+        let deployed = false;
+        let legHeight = 1.5; // meters
+        
+        // Create genuine sunflower petal shape (300W)
+        function createSunflowerPetal(index) {
+            const petalGroup = new THREE.Group();
+            
+            // Genuine sunflower petal shape - elongated teardrop
+            const petalShape = new THREE.Shape();
+            petalShape.moveTo(0, 0); // Base at center
+            
+            // Organic curved edges like real sunflower
+            petalShape.bezierCurveTo(80, 50, 140, 180, 160, 350); // Right side curve
+            petalShape.bezierCurveTo(120, 400, 80, 420, 0, 400); // Rounded tip
+            petalShape.bezierCurveTo(-80, 420, -120, 400, -160, 350); // Left side curve
+            petalShape.bezierCurveTo(-140, 180, -80, 50, 0, 0); // Back to base
+            
+            // Silver frame
+            const frameGeom = new THREE.ExtrudeGeometry(petalShape, {
+                depth: 12,
+                bevelEnabled: true,
+                bevelThickness: 3,
+                bevelSize: 2,
+                bevelSegments: 3
+            });
+            const frame = new THREE.Mesh(frameGeom, silverFrameMat);
+            frame.rotation.x = -Math.PI / 2;
+            frame.castShadow = true;
+            frame.receiveShadow = true;
+            petalGroup.add(frame);
+            
+            // Solar cells filling petal
+            const cellShape = new THREE.Shape();
+            cellShape.moveTo(0, 5);
+            cellShape.bezierCurveTo(70, 45, 125, 170, 145, 340);
+            cellShape.bezierCurveTo(110, 385, 75, 400, 0, 385);
+            cellShape.bezierCurveTo(-75, 400, -110, 385, -145, 340);
+            cellShape.bezierCurveTo(-125, 170, -70, 45, 0, 5);
+            
+            const cellsGeom = new THREE.ExtrudeGeometry(cellShape, { depth: 4, bevelEnabled: false });
+            const cells = new THREE.Mesh(cellsGeom, solarCellMat);
+            cells.rotation.x = -Math.PI / 2;
+            cells.position.y = 10;
+            cells.castShadow = true;
+            cells.receiveShadow = true;
+            petalGroup.add(cells);
+            
+            petalGroup.userData = {
+                index: index,
+                power: 300,
+                deployed: false,
+                edgePipe: null
+            };
+            
+            return petalGroup;
+        }
+        
+        // Create black edge pipe following petal curve
+        function createEdgePipe(petal) {
+            const pipeGroup = new THREE.Group();
+            const points = [];
+            
+            // Follow petal edge curve
+            for (let i = 0; i <= 50; i++) {
+                const t = i / 50;
+                const angle = t * Math.PI * 2;
+                
+                // Approximate petal edge
+                let x, z;
+                if (t < 0.5) {
+                    x = 160 * Math.sin(t * Math.PI);
+                    z = 400 * t;
+                } else {
+                    x = -160 * Math.sin((t - 0.5) * Math.PI);
+                    z = 400 * (1 - t);
+                }
+                
+                points.push(new THREE.Vector3(x, 12, z));
+            }
+            
+            const curve = new THREE.CatmullRomCurve3(points);
+            const tubeGeom = new THREE.TubeGeometry(curve, 50, 3.5, 8, false);
+            const tube = new THREE.Mesh(tubeGeom, blackPipeMat);
+            tube.castShadow = true;
+            pipeGroup.add(tube);
+            
+            return pipeGroup;
+        }
+        
+        // Create smaller central cone
+        function createCentralCone() {
+            const coneGroup = new THREE.Group();
+            const baseRadius = 50; // Smaller
+            const topRadius = 8;
+            const height = 120; // Shorter
+            const coils = 12;
+            const pipeRadius = 3;
+            
+            for (let i = 0; i < coils * 10; i++) {
+                const progress = i / (coils * 10);
+                const y = progress * height;
+                const radius = baseRadius - (baseRadius - topRadius) * progress;
+                const angle = progress * coils * 2 * Math.PI;
+                
+                const x = radius * Math.cos(angle);
+                const z = radius * Math.sin(angle);
+                
+                const segmentGeom = new THREE.SphereGeometry(pipeRadius, 6, 6);
+                const segment = new THREE.Mesh(segmentGeom, blackPipeMat);
+                segment.position.set(x, y, z);
+                segment.castShadow = true;
+                coneGroup.add(segment);
+            }
+            
+            coneGroup.position.y = 20;
+            return coneGroup;
+        }
+        
+        // Create gimbal joint
+        function createGimbal() {
+            const gimbalGroup = new THREE.Group();
+            
+            // Ball joint
+            const ballGeom = new THREE.SphereGeometry(35, 20, 20);
+            const ball = new THREE.Mesh(ballGeom, grayHubMat);
+            ball.castShadow = true;
+            gimbalGroup.add(ball);
+            
+            // Mounting ring
+            const ringGeom = new THREE.TorusGeometry(40, 6, 16, 32);
+            const ring = new THREE.Mesh(ringGeom, grayHubMat);
+            ring.rotation.x = Math.PI / 2;
+            ring.castShadow = true;
+            gimbalGroup.add(ring);
+            
+            return gimbalGroup;
+        }
+        
+        // Create telescoping leg
+        function createTelescopingLeg() {
+            const legGroup = new THREE.Group();
+            
+            // Three sections that telescope
+            const sections = [
+                { radius: 18, height: 500, color: 0x424242 },
+                { radius: 15, height: 500, color: 0x616161 },
+                { radius: 12, height: 500, color: 0x757575 }
+            ];
+            
+            sections.forEach((section, i) => {
+                const geom = new THREE.CylinderGeometry(section.radius, section.radius, section.height, 16);
+                const mat = new THREE.MeshStandardMaterial({ color: section.color, metalness: 0.9, roughness: 0.1 });
+                const seg = new THREE.Mesh(geom, mat);
+                seg.position.y = -i * 500 - 250;
+                seg.castShadow = true;
+                seg.userData.section = i;
+                legGroup.add(seg);
+            });
+            
+            return legGroup;
+        }
+        
+        // Create base plate
+        function createBasePlate() {
+            const baseGroup = new THREE.Group();
+            
+            const plateGeom = new THREE.CylinderGeometry(250, 260, 20, 32);
+            const plate = new THREE.Mesh(plateGeom, grayHubMat);
+            plate.position.y = -1490;
+            plate.castShadow = true;
+            plate.receiveShadow = true;
+            baseGroup.add(plate);
+            
+            // Mounting feet
+            for (let i = 0; i < 4; i++) {
+                const angle = (i / 4) * Math.PI * 2;
+                const footGeom = new THREE.BoxGeometry(40, 30, 80);
+                const foot = new THREE.Mesh(footGeom, grayHubMat);
+                foot.position.set(
+                    Math.cos(angle) * 220,
+                    -1505,
+                    Math.sin(angle) * 220
+                );
+                foot.rotation.y = angle;
+                foot.castShadow = true;
+                baseGroup.add(foot);
+            }
+            
+            return baseGroup;
+        }
+        
+        // Initialize
+        centralCone = createCentralCone();
+        scene.add(centralCone);
+        
+        gimbalJoint = createGimbal();
+        gimbalJoint.position.y = -20;
+        scene.add(gimbalJoint);
+        
+        telescopingLeg = createTelescopingLeg();
+        telescopingLeg.position.y = -50;
+        scene.add(telescopingLeg);
+        
+        baseplate = createBasePlate();
+        scene.add(baseplate);
+        
+        // Create 10 sunflower petals
+        const NUM_PETALS = 10;
+        const PETAL_RADIUS = 0; // Start at center
+        
+        for (let i = 0; i < NUM_PETALS; i++) {
+            const petal = createSunflowerPetal(i);
+            petal.position.set(0, 0, i * 15);
+            petal.userData.targetAngle = (i / NUM_PETALS) * Math.PI * 2;
+            scene.add(petal);
+            petals.push(petal);
+        }
+        
+        // Deploy petals in circular pattern (minimal gaps)
+        function deployPetals() {
+            petals.forEach((petal, i) => {
+                const angle = petal.userData.targetAngle;
+                const distance = 80; // Close to center for tight fit
+                const targetX = Math.cos(angle) * distance;
+                const targetZ = Math.sin(angle) * distance;
+                const targetRotY = angle;
+                
+                const duration = 2500;
+                const startTime = Date.now();
+                
+                function anim() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    
+                    petal.position.x = targetX * eased;
+                    petal.position.z = (i * 15) + (targetZ - i * 15) * eased;
+                    petal.rotation.y = targetRotY * eased;
+                    
+                    if (progress < 1 && state.running) {
+                        requestAnimationFrame(anim);
+                    } else {
+                        petal.userData.deployed = true;
+                    }
+                }
+                anim();
+            });
+            deployed = true;
+            document.getElementById('deployStatus').textContent = 'Deployed ✓';
+        }
+        
+        // Fold petals
+        function foldPetals() {
+            petals.forEach((petal, i) => {
+                petal.position.set(0, 0, i * 15);
+                petal.rotation.y = 0;
+                petal.userData.deployed = false;
+            });
+            deployed = false;
+            document.getElementById('deployStatus').textContent = 'Folded';
+        }
+        
+        // Adjust leg height
+        function adjustHeight() {
+            legHeight = legHeight === 1.5 ? 3.0 : 1.5;
+            document.getElementById('heightStatus').textContent = legHeight.toFixed(1) + 'm';
+            
+            // Animate leg extension
+            const targetY = legHeight === 3.0 ? -50 : -800;
+            const startY = telescopingLeg.position.y;
+            const duration = 1500;
+            const startTime = Date.now();
+            
+            function anim() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                
+                telescopingLeg.position.y = startY + (targetY - startY) * eased;
+                
+                if (progress < 1) requestAnimationFrame(anim);
+            }
+            anim();
+        }
+        
+        // Assembly state
+        const state = {
+            running: false,
+            paused: false,
+            phase: 'cone',
+            coneDone: false,
+            petalsMounted: 0,
+            pipesMounted: 0,
+            gimbalInstalled: false,
+            speed: 40
+        };
+        
+        // Execute assembly
+        function executeAssembly() {
+            if (!state.running || state.paused) return;
+            
+            const delay = 800 / state.speed;
+            
+            if (state.phase === 'cone' && !state.coneDone) {
+                state.coneDone = true;
+                document.getElementById('coneStatus').textContent = 'Installed ✓';
+                document.getElementById('currentPhase').textContent = 'Mounting Petals';
+                state.phase = 'petals';
+                setTimeout(executeAssembly, delay);
+            } else if (state.phase === 'petals' && state.petalsMounted < 10) {
+                state.petalsMounted++;
+                const power = state.petalsMounted * 300;
+                document.getElementById('petalsStatus').textContent = `${state.petalsMounted}/10`;
+                document.getElementById('powerOutput').textContent = `${power}W / 3000W`;
+                document.getElementById('currentTask').textContent = `Mounting petal ${state.petalsMounted}`;
+                setTimeout(executeAssembly, delay * 2);
+            } else if (state.phase === 'petals' && state.petalsMounted >= 10) {
+                state.phase = 'pipes';
+                document.getElementById('currentPhase').textContent = 'Installing Edge Pipes';
+                setTimeout(executeAssembly, delay);
+            } else if (state.phase === 'pipes' && state.pipesMounted < 10) {
+                state.pipesMounted++;
+                document.getElementById('pipesStatus').textContent = `${state.pipesMounted}/10`;
+                document.getElementById('currentTask').textContent = `Installing edge pipe ${state.pipesMounted}`;
+                
+                // Add edge pipe visually
+                const pipe = createEdgePipe(petals[state.pipesMounted - 1]);
+                petals[state.pipesMounted - 1].add(pipe);
+                edgePipes.push(pipe);
+                
+                setTimeout(executeAssembly, delay);
+            } else if (state.phase === 'pipes' && state.pipesMounted >= 10) {
+                state.phase = 'gimbal';
+                document.getElementById('currentPhase').textContent = 'Installing Gimbal';
+                setTimeout(executeAssembly, delay);
+            } else if (state.phase === 'gimbal' && !state.gimbalInstalled) {
+                state.gimbalInstalled = true;
+                document.getElementById('gimbalStatus').textContent = 'Installed ✓';
+                state.phase = 'deploy';
+                document.getElementById('currentPhase').textContent = 'Deploying';
+                setTimeout(() => {
+                    deployPetals();
+                    setTimeout(() => {
+                        state.phase = 'complete';
+                        document.getElementById('currentPhase').textContent = 'Complete! 🌻';
+                        document.getElementById('currentTask').textContent = '3000W system ready!';
+                        state.running = false;
+                    }, 3000);
+                }, delay);
+            }
+        }
+        
+        // Controls
+        document.getElementById('startBtn').onclick = () => {
+            if (!state.running) {
+                state.running = true;
+                state.paused = false;
+                executeAssembly();
+            }
+        };
+        
+        document.getElementById('pauseBtn').onclick = () => {
+            state.paused = !state.paused;
+            document.getElementById('pauseBtn').textContent = state.paused ? '▶ Resume' : '⏸ Pause';
+            if (!state.paused && state.running) executeAssembly();
+        };
+        
+        document.getElementById('resetBtn').onclick = () => location.reload();
+        document.getElementById('speedSlider').oninput = (e) => state.speed = parseInt(e.target.value);
+        
+        document.getElementById('viewTopBtn').onclick = () => {
+            camera.position.set(0, 1500, 0);
+            camera.lookAt(0, 0, 0);
+        };
+        
+        document.getElementById('viewSideBtn').onclick = () => {
+            camera.position.set(1500, 300, 0);
+            camera.lookAt(0, 0, 0);
+        };
+        
+        document.getElementById('toggleConeBtn').onclick = () => {
+            coneVisible = !coneVisible;
+            centralCone.visible = coneVisible;
+        };
+        
+        document.getElementById('togglePipesBtn').onclick = () => {
+            pipesVisible = !pipesVisible;
+            edgePipes.forEach(pipe => pipe.visible = pipesVisible);
+        };
+        
+        document.getElementById('foldBtn').onclick = () => {
+            if (deployed) foldPetals();
+            else deployPetals();
+        };
+        
+        document.getElementById('adjustHeightBtn').onclick = adjustHeight;
+        
+        // Mouse
+        let isDragging = false;
+        let prevMouse = { x: 0, y: 0 };
+        let isRightClick = false;
+        
+        renderer.domElement.onmousedown = (e) => {
+            isDragging = true;
+            isRightClick = e.button === 2;
+            prevMouse = { x: e.clientX, y: e.clientY };
+        };
+        
+        renderer.domElement.onmousemove = (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - prevMouse.x;
+            const dy = e.clientY - prevMouse.y;
+            
+            if (isRightClick) {
+                camera.position.x -= dx * 1;
+                camera.position.y += dy * 1;
+            } else {
+                const speed = 0.005;
+                const radius = Math.sqrt(camera.position.x ** 2 + camera.position.z ** 2);
+                let theta = Math.atan2(camera.position.z, camera.position.x);
+                theta -= dx * speed;
+                camera.position.x = radius * Math.cos(theta);
+                camera.position.z = radius * Math.sin(theta);
+                camera.position.y = Math.max(100, camera.position.y - dy);
+                camera.lookAt(0, 0, 0);
+            }
+            prevMouse = { x: e.clientX, y: e.clientY };
+        };
+        
+        renderer.domElement.onmouseup = () => isDragging = false;
+        renderer.domElement.oncontextmenu = (e) => e.preventDefault();
+        
+        renderer.domElement.onwheel = (e) => {
+            e.preventDefault();
+            const dir = new THREE.Vector3();
+            camera.getWorldDirection(dir);
+            camera.position.addScaledVector(dir, -e.deltaY * 0.3);
+        };
+        
+        // Animate
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (deployed && gimbalJoint) {
+                gimbalJoint.rotation.y += 0.002;
+                petals.forEach((petal, i) => {
+                    if (petal.userData.deployed) {
+                        const angle = petal.userData.targetAngle + gimbalJoint.rotation.y;
+                        const x = Math.cos(angle) * 80;
+                        const z = Math.sin(angle) * 80;
+                        petal.position.x = x;
+                        petal.position.z = z;
+                        petal.rotation.y = angle;
+                    }
+                });
+            }
+            
+            if (centralCone) centralCone.rotation.y += 0.003;
+            
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        window.onresize = () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        };
+    </script>
+</body>
+</html>
