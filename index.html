@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sunflower Gimbal Tracker - Join the Solar Revolution</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -20,6 +20,7 @@
             line-height: 1.6;
             color: var(--dark);
             background: var(--cream);
+            overflow-x: hidden;
         }
         header {
             min-height: 100vh;
@@ -28,96 +29,221 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
+            width: 100%;
         }
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
+            font-size: clamp(2.2rem, 8vw, 4rem);
             color: white;
             margin-bottom: 1rem;
+            word-wrap: break-word;
+            max-width: 100%;
         }
         .tagline {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 4vw, 1.5rem);
             color: var(--forest-green);
             margin-bottom: 2rem;
+            padding: 0 1rem;
         }
         .cta-btn {
             display: inline-block;
-            padding: 1.2rem 3rem;
+            padding: 1rem 2rem;
             background: var(--forest-green);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            background: #1f4520;
+            transform: translateY(-3px);
         }
         .hero-stats {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 3rem;
+            gap: 1.5rem;
             margin-top: 2rem;
+            width: 100%;
+        }
+        .hero-stats > div {
+            min-width: 100px;
         }
         .stat-number {
-            font-size: 3rem;
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 700;
             color: white;
             display: block;
         }
         .stat-label {
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
             color: var(--forest-green);
         }
         section {
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
             max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
         }
         h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: var(--earth-brown);
             margin-bottom: 2rem;
             text-align: center;
+            word-wrap: break-word;
         }
         .crowdfunding {
             background: linear-gradient(135deg, var(--sunflower-gold) 0%, var(--deep-gold) 100%);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             color: white;
+        }
+        .progress-container {
+            background: rgba(255,255,255,0.3);
+            height: 40px;
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 100%;
+            position: relative;
+            overflow: hidden;
         }
         .progress-bar {
             background: var(--forest-green);
             height: 40px;
             width: 14%;
             border-radius: 20px;
+            transition: width 1s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            white-space: nowrap;
+        }
+        .funding-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
         .funding-stat-value {
-            font-size: 3rem;
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 700;
             display: block;
+        }
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         .tier {
             background: white;
             border-radius: 15px;
-            padding: 2rem;
-            margin: 1rem;
+            padding: 1.5rem;
             text-align: center;
         }
         .tier-amount {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
             color: var(--forest-green);
+            margin: 1rem 0;
+        }
+        .tier p {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.8;
+        }
+        .tier-btn {
+            display: block;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--forest-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .tier-btn:hover {
+            background: #1f4520;
+        }
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .reason-card h3 {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 0.5rem;
+        }
+        .reason-card p {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        .founder-card {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: white;
+            border-radius: 15px;
+        }
+        .founder-card h3 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--earth-brown);
+        }
+        .nav-menu {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-menu a {
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: var(--forest-green);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        .nav-menu a:hover {
+            background: var(--cream);
         }
         footer {
             background: var(--dark);
             color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1rem;
+        }
+        footer p {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
+        @media (min-width: 768px) {
+            section { padding: 4rem 2rem; }
+            header { padding: 2rem; }
         }
     </style>
 </head>
 <body>
+    <div class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="sgt_donate.html">Donate</a>
+        <a href="sgt_final_design.html">3D Design</a>
+    </div>
+
     <header>
         <div>
             <h1>🌻 Sunflower Gimbal Tracker</h1>
@@ -142,27 +268,27 @@
 
     <section>
         <h2>The Energy Challenge</h2>
-        <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem;">
+        <p style="max-width: 800px; margin: 0 auto; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">
             <strong>Fixed solar panels waste 40-60% of available sunlight.</strong> Traditional panels face one direction all day while the sun moves across the sky. They overheat in summer, losing efficiency. Existing tracking systems cost £15,000+ putting them out of reach for most people.
         </p>
-        <p style="max-width: 800px; margin: 2rem auto; font-size: 1.1rem;">
+        <p style="max-width: 800px; margin: 2rem auto 0; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">
             <strong>Our Solution:</strong> Like a real sunflower, our SGT tracks the sun on two axes throughout the day. Integrated water cooling keeps panels at optimal temperature while generating hot water. 10 curved petals fold for transport and deploy to capture maximum energy - all at a fraction of the cost of traditional trackers.
         </p>
     </section>
 
     <section id="invest">
         <div class="crowdfunding">
-            <h2 style="color: white;">Be Part of the Solar Revolution</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+            <h2 style="color: white; font-size: clamp(1.8rem, 5vw, 2.5rem);">Be Part of the Solar Revolution</h2>
+            <p style="font-size: clamp(1rem, 3vw, 1.2rem); margin-bottom: 2rem;">
                 We're raising <strong>£60,000</strong> to purchase two advanced robotic arms for automated manufacturing.
             </p>
             
-            <div style="background: rgba(255,255,255,0.3); height: 40px; border-radius: 20px; margin: 2rem auto; max-width: 600px; position: relative;">
+            <div class="progress-container">
                 <div class="progress-bar"></div>
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 700;">£8,500 raised of £60,000</div>
+                <div class="progress-text">£8,500 raised of £60,000</div>
             </div>
             
-            <div style="display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;">
+            <div class="funding-stats">
                 <div>
                     <span class="funding-stat-value">14%</span>
                     <div>Funded</div>
@@ -177,29 +303,29 @@
                 </div>
             </div>
 
-            <h3 style="margin: 3rem 0 2rem;">Investment Tiers</h3>
+            <h3 style="margin: 3rem 0 2rem; font-size: clamp(1.3rem, 4vw, 1.8rem);">Investment Tiers</h3>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; max-width: 1000px; margin: 0 auto;">
+            <div class="tier-grid">
                 <div class="tier">
                     <h4>Seed Supporter</h4>
                     <div class="tier-amount">£100</div>
                     <p>Early backer recognition<br>10% discount on purchase<br>SGT community access</p>
-                    <a href="sgt_donate.html" style="display: block; margin-top: 1rem; padding: 1rem; background: var(--forest-green); color: white; text-decoration: none; border-radius: 10px;">Back This Tier</a>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
                 </div>
                 
                 <div class="tier" style="background: #fff8e7; border: 3px solid var(--deep-gold);">
-                    <div style="background: var(--deep-gold); color: white; padding: 0.3rem; margin: -2rem -2rem 1rem; border-radius: 12px 12px 0 0;"><strong>POPULAR</strong></div>
+                    <div style="background: var(--deep-gold); color: white; padding: 0.3rem; margin: -1.5rem -1.5rem 1rem; border-radius: 12px 12px 0 0;"><strong>POPULAR</strong></div>
                     <h4>Growth Partner</h4>
                     <div class="tier-amount">£500</div>
                     <p>All Seed perks<br>20% discount<br>Founder's wall<br>Factory tour invite</p>
-                    <a href="sgt_donate.html" style="display: block; margin-top: 1rem; padding: 1rem; background: var(--forest-green); color: white; text-decoration: none; border-radius: 10px;">Back This Tier</a>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
                 </div>
                 
                 <div class="tier">
                     <h4>Founding Investor</h4>
                     <div class="tier-amount">£2,000+</div>
                     <p>All Growth perks<br><strong>FREE SGT-250 unit</strong><br>Priority installation<br>Equity opportunities</p>
-                    <a href="sgt_donate.html" style="display: block; margin-top: 1rem; padding: 1rem; background: var(--forest-green); color: white; text-decoration: none; border-radius: 10px;">Back This Tier</a>
+                    <a href="sgt_donate.html" class="tier-btn">Back This Tier</a>
                 </div>
             </div>
         </div>
@@ -207,28 +333,28 @@
 
     <section>
         <h2>Why Invest in SGT?</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-            <div>
+        <div class="reasons-grid">
+            <div class="reason-card">
                 <h3>🚀 Massive Market</h3>
                 <p>£13.4B UK solar market growing 20% annually</p>
             </div>
-            <div>
+            <div class="reason-card">
                 <h3>🏆 Unique Technology</h3>
                 <p>Only system combining tracking, concentration, AND cooling</p>
             </div>
-            <div>
+            <div class="reason-card">
                 <h3>💰 Strong Economics</h3>
                 <p>36-50% gross margins with clear path to profitability</p>
             </div>
-            <div>
+            <div class="reason-card">
                 <h3>🌍 Environmental Impact</h3>
                 <p>Every unit saves 2-3 tons of CO₂ annually</p>
             </div>
-            <div>
+            <div class="reason-card">
                 <h3>🏭 Scalable Manufacturing</h3>
                 <p>Robot automation enables rapid scaling</p>
             </div>
-            <div>
+            <div class="reason-card">
                 <h3>🇬🇧 UK Production</h3>
                 <p>Local supply chain and quality control</p>
             </div>
@@ -237,8 +363,8 @@
 
     <section>
         <h2>Meet the Founder</h2>
-        <div style="max-width: 600px; margin: 0 auto; text-align: center; padding: 2rem; background: white; border-radius: 15px;">
-            <h3 style="font-size: 2rem; color: var(--earth-brown);">Iain Barker</h3>
+        <div class="founder-card">
+            <h3>Iain Barker</h3>
             <p style="color: var(--deep-gold); font-weight: 600; margin-bottom: 1rem;">Founder & CEO</p>
             <p style="margin-bottom: 2rem;">
                 Combining expertise in renewable energy systems with a passion for biomimetic design, Iain is leading the revolution in accessible solar technology.
@@ -252,14 +378,14 @@
 
     <section style="text-align: center;">
         <h2>Ready to Join Us?</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+        <p style="font-size: clamp(1rem, 3vw, 1.2rem); margin-bottom: 2rem;">
             Help us build the future of solar energy. Every contribution brings us closer to automated manufacturing.
         </p>
-        <a href="sgt_donate.html" class="cta-btn" style="font-size: 1.2rem; padding: 1.5rem 4rem;">Invest in SGT Today</a>
+        <a href="sgt_donate.html" class="cta-btn" style="font-size: clamp(1rem, 3vw, 1.2rem); padding: 1.2rem 3rem;">Invest in SGT Today</a>
     </section>
 
     <footer>
-        <p style="font-size: 1.5rem; margin-bottom: 1rem;">🌻 Sunflower Gimbal Tracker</p>
+        <p style="font-size: clamp(1.2rem, 3vw, 1.5rem); margin-bottom: 1rem;">🌻 Sunflower Gimbal Tracker</p>
         <p>Bringing affordable, efficient solar tracking to everyone.</p>
         <p style="margin-top: 1rem; opacity: 0.7;">© 2026 Sunflower Gimbal Tracker. All rights reserved.</p>
     </footer>
