@@ -1,2 +1,419 @@
 
             
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate to SGT - Sunflower Gimbal Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --sunflower-gold: #FFB81C;
+            --deep-gold: #E89C31;
+            --forest-green: #2C5F2D;
+            --cream: #FFF8E7;
+            --dark: #1a1a1a;
+        }
+        body {
+            font-family: 'Work Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--cream) 0%, #fff 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto;
+            width: 100%;
+        }
+        .back-link {
+            display: inline-block;
+            color: var(--forest-green);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        .back-link:hover { transform: translateX(-5px); }
+        .header { 
+            text-align: center; 
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: #6B4423;
+            margin-bottom: 1rem;
+            word-wrap: break-word;
+        }
+        .subtitle { 
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #666;
+            padding: 0 1rem;
+        }
+        .method-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--sunflower-gold);
+            flex-wrap: wrap;
+        }
+        .method-icon { font-size: 2.5rem; }
+        .method-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: #6B4423;
+        }
+        .method-subtitle {
+            color: var(--forest-green);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .detail-grid { 
+            display: grid; 
+            gap: 1rem; 
+            margin: 1.5rem 0;
+        }
+        .detail-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            background: var(--cream);
+            border-radius: 10px;
+        }
+        .detail-label { 
+            font-weight: 600; 
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .detail-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--dark);
+            word-break: break-all;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--forest-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .copy-btn:hover {
+            background: #1f4520;
+            transform: translateY(-2px);
+        }
+        .copied { background: var(--sunflower-gold) !important; }
+        .qr-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            border: 2px dashed var(--sunflower-gold);
+        }
+        .qr-code {
+            max-width: 100%;
+            width: 250px;
+            height: auto;
+            margin: 1rem auto;
+            display: block;
+            border: 3px solid #000;
+            border-radius: 10px;
+        }
+        .instructions {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--forest-green);
+        }
+        .instructions h3 {
+            color: var(--forest-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .instructions ol { 
+            margin-left: 1.2rem;
+            padding-left: 0.5rem;
+        }
+        .instructions li { 
+            margin: 0.5rem 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .confirmation-note {
+            background: linear-gradient(135deg, #fff8e7 0%, #ffe4b5 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: center;
+            border: 2px solid var(--sunflower-gold);
+        }
+        .confirmation-note h3 { 
+            color: #6B4423; 
+            margin-bottom: 0.8rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+        }
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--forest-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        .contact-button:hover {
+            background: #1f4520;
+            transform: translateY(-3px);
+        }
+        
+        @media (min-width: 600px) {
+            body { padding: 2rem; }
+            .method-card { padding: 2.5rem; }
+            .detail-row {
+                grid-template-columns: 140px 1fr;
+                gap: 1rem;
+            }
+            .copy-btn { width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Main Site</a>
+        
+        <div class="header">
+            <h1>🌻 Support SGT</h1>
+            <p class="subtitle">Choose your preferred donation method to help us reach our £60,000 goal</p>
+        </div>
+        
+        <!-- Bank Transfer -->
+        <div class="method-card">
+            <div class="method-header">
+                <div class="method-icon">🏦</div>
+                <div>
+                    <div class="method-title">Bank Transfer</div>
+                    <div class="method-subtitle">Direct UK Bank Transfer (Recommended)</div>
+                </div>
+            </div>
+            
+            <div class="detail-grid">
+                <div class="detail-row">
+                    <div class="detail-label">Account Name:</div>
+                    <div class="detail-value">I S Barker</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Sort Code:</div>
+                    <div class="detail-value">09-01-30</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Account Number:</div>
+                    <div class="detail-value">11324979</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Bank:</div>
+                    <div class="detail-value">Santander UK</div>
+                </div>
+            </div>
+            
+            <button class="copy-btn" onclick="copyBankDetails()">
+                📋 Copy All Bank Details
+            </button>
+            
+            <div class="instructions">
+                <h3>📝 How to Send a Bank Transfer:</h3>
+                <ol>
+                    <li>Open your banking app or online banking</li>
+                    <li>Select "Make a Payment" or "Send Money"</li>
+                    <li>Enter the sort code: <strong>09-01-30</strong></li>
+                    <li>Enter the account number: <strong>11324979</strong></li>
+                    <li>Add your investment amount</li>
+                    <li>In the reference field, add: <strong>SGT-[Your Name]</strong></li>
+                    <li>Review and confirm the payment</li>
+                </ol>
+            </div>
+            
+            <div class="warning">
+                <strong>⚡ Important:</strong> Please include your name in the payment reference so we can properly track and acknowledge your contribution!
+            </div>
+        </div>
+        
+        <!-- Bitcoin/Crypto -->
+        <div class="method-card">
+            <div class="method-header">
+                <div class="method-icon">₿</div>
+                <div>
+                    <div class="method-title">Bitcoin (BTC)</div>
+                    <div class="method-subtitle">Cryptocurrency Donation</div>
+                </div>
+            </div>
+            
+            <p style="margin-bottom: 1.5rem; color: #666;">
+                Send Bitcoin directly to our secure wallet address. Perfect for international supporters or those who prefer crypto payments.
+            </p>
+            
+            <div class="detail-grid">
+                <div class="detail-row">
+                    <div class="detail-label">Bitcoin Address:</div>
+                    <div class="detail-value" style="font-size: 0.85rem; line-height: 1.5;">
+                        bc1qatmk5qlarmdz9le97fyfhqzss0tf0g7nc95fc3
+                    </div>
+                </div>
+            </div>
+            
+            <button class="copy-btn" onclick="copyBitcoinAddress()">
+                📋 Copy Bitcoin Address
+            </button>
+            
+            <div class="qr-container">
+                <h3 style="color: #6B4423; margin-bottom: 1rem; font-size: clamp(1rem, 3vw, 1.2rem);">Scan QR Code</h3>
+                <svg class="qr-code" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29">
+                    <rect width="29" height="29" fill="#ffffff"/>
+                    <path d="M0,0h7v7h-7zM8,0h1v1h-1zM10,0h2v1h-2zM13,0h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM15,0h1v1h-1zM17,0h1v1h-1zM22,0h7v7h-7zM1,1v5h5v-5zM10,1h1v1h-1zM12,1h1v1h-1zM16,1h1v1h-1zM18,1h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM20,1h1v1h-1zM23,1v5h5v-5zM2,2h3v3h-3zM14,2h1v2h-1zM24,2h3v3h-3zM10,3h1v1h-1zM12,3h1v1h-1zM16,3h1v1h-1zM20,3h1v1h-1zM8,4h2v1h1v1h-1v1h-2v-2h-1v-1zM17,4h1v2h1v1h-2v-1h-1v-1h1zM11,5h1v1h-1zM15,5h1v1h-1zM19,5h1v2h-2v-1h1zM0,6h1v2h-1zM9,6h1v1h-1zM13,6h1v1h-1zM20,6h1v1h-1zM28,6h1v2h-1zM10,7h1v2h-1zM15,7h1v1h-1zM21,7h1v1h-1zM8,8h1v1h-1zM12,8h2v1h1v1h-3zM16,8h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM20,8h1v1h-1zM0,9h1v1h1v2h-1v-1h-1zM2,9h2v1h-2zM5,9h1v2h-2v-1h1zM27,9h2v1h-2zM1,10h1v1h-1zM3,10h1v1h-1zM6,10h1v1h-1zM8,10h1v1h-1zM11,10h1v1h1v1h-2zM19,10h1v1h-1zM22,10h1v2h-2v-1h1zM24,10h2v1h-2zM27,10h1v1h-1zM0,11h1v1h-1zM4,11h1v1h-1zM9,11h1v2h-1zM13,11h2v1h-1v1h-1zM18,11h1v1h-1zM20,11h1v1h-1zM23,11h1v1h-1zM25,11h1v1h-1zM28,11h1v1h-1zM1,12h1v1h-1zM3,12h2v1h-2zM6,12h2v1h-2zM15,12h2v1h-2zM21,12h1v1h-1zM24,12h3v1h-3zM0,13h1v1h1v1h-2zM2,13h1v1h-1zM4,13h2v1h-2zM10,13h1v1h-1zM12,13h1v1h-1zM17,13h1v1h-1zM19,13h2v1h1v1h-1v1h-1v-1h-1v-1h-1v-1h1zM22,13h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM26,13h1v1h-1zM28,13h1v2h-1zM8,14h1v2h-1zM11,14h1v1h-1zM14,14h1v1h-1zM16,14h1v1h-1zM25,14h2v1h-2zM1,15h1v1h-1zM3,15h3v1h-3zM9,15h1v1h-1zM12,15h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM17,15h1v1h-1zM24,15h1v1h-1zM26,15h1v1h-1zM0,16h2v1h1v1h-2v1h-1zM3,16h1v1h-1zM5,16h2v1h-2zM10,16h1v1h-1zM14,16h2v1h-2zM18,16h1v2h-1zM21,16h1v1h-1zM23,16h1v2h-2v-1h1zM25,16h1v1h-1zM27,16h2v1h-2zM4,17h1v1h-1zM6,17h1v1h-1zM8,17h1v1h-1zM15,17h2v1h-2zM19,17h1v1h-1zM26,17h1v1h-1zM1,18h1v1h-1zM3,18h1v2h-1zM5,18h2v1h-2zM9,18h1v1h-1zM11,18h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM16,18h1v1h-1zM20,18h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM24,18h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM27,18h2v1h-2zM0,19h1v1h-1zM8,19h1v1h-1zM17,19h2v1h-2zM28,19h1v2h-1zM2,20h1v1h-1zM4,20h3v1h-3zM9,20h1v1h-1zM13,20h1v1h-1zM15,20h1v1h-1zM18,20h1v1h-1zM26,20h1v1h-1zM0,21h1v1h1v1h-2zM3,21h3v1h-3zM8,21h1v1h1v1h-2zM10,21h1v1h-1zM12,21h2v1h-2zM16,21h3v1h-3zM22,21h1v2h-2v-1h1zM24,21h2v1h-2zM27,21h1v1h-1zM0,22h7v7h-7zM11,22h1v1h-1zM13,22h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM19,22h1v1h-1zM23,22h1v1h-1zM25,22h1v1h-1zM1,23v5h5v-5zM9,23h1v1h-1zM15,23h3v1h-3zM20,23h1v2h-1zM24,23h1v1h-1zM26,23h3v1h-3zM2,24h3v3h-3zM8,24h1v1h-1zM10,24h3v1h-3zM18,24h1v1h-1zM21,24h1v1h-1zM23,24h1v2h-2v-1h1zM25,24h1v1h-1zM27,24h1v1h-1zM14,25h1v1h-1zM16,25h1v1h-1zM19,25h1v1h-1zM26,25h1v2h-1zM28,25h1v2h-1zM8,26h1v1h-1zM10,26h3v1h-3zM15,26h1v1h1v1h-1v1h-1v-1h-1v1h-1v-2h1v-1h1zM17,26h1v1h-1zM20,26h2v1h-2zM24,26h1v1h-1zM9,27h3v1h-3zM13,27h1v1h-1zM18,27h1v1h-1zM21,27h2v1h-2zM25,27h1v1h-1zM27,27h1v1h-1zM8,28h2v1h-2zM11,28h1v1h-1zM14,28h3v1h-3zM19,28h2v1h-2zM22,28h5v1h-5z" fill="#000000"/>
+                </svg>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
+                    Scan with your Bitcoin wallet app
+                </p>
+            </div>
+            
+            <div class="instructions">
+                <h3>🪙 How to Send Bitcoin:</h3>
+                <ol>
+                    <li>Open your Bitcoin wallet (Coinbase, Trust Wallet, etc.)</li>
+                    <li>Select "Send" or "Transfer"</li>
+                    <li>Scan the QR code above OR paste the Bitcoin address</li>
+                    <li>Enter the amount you wish to contribute</li>
+                    <li>Review the transaction fee</li>
+                    <li>Confirm and send the transaction</li>
+                </ol>
+            </div>
+            
+            <div class="warning">
+                <strong>⚡ Important:</strong> Bitcoin transactions can take 10-60 minutes to confirm. We'll acknowledge your contribution once it's confirmed on the blockchain.
+            </div>
+        </div>
+        
+        <!-- Email Confirmation -->
+        <div class="method-card">
+            <div class="method-header">
+                <div class="method-icon">✉️</div>
+                <div>
+                    <div class="method-title">Confirm Your Donation</div>
+                    <div class="method-subtitle">Let us know you've contributed</div>
+                </div>
+            </div>
+            
+            <div class="confirmation-note">
+                <h3>📧 After You Donate</h3>
+                <p style="margin-bottom: 1rem;">
+                    Please send us a quick email to confirm your contribution and receive your backer perks!
+                </p>
+                <a href="mailto:ittrader@protonmail.com?subject=SGT Donation Confirmation&body=Hi Iain,%0D%0A%0D%0AI've just sent a donation to SGT:%0D%0A%0D%0AAmount: £______%0D%0AMethod: [Bank Transfer / Bitcoin]%0D%0ADate: ______%0D%0A%0D%0AInvestment Tier: [Seed Supporter £100 / Growth Partner £500 / Founding Investor £2000+]%0D%0A%0D%0APlease confirm receipt and let me know next steps.%0D%0A%0D%0AThank you!%0D%0A%0D%0AName: ______%0D%0AEmail: ______%0D%0APhone: ______" 
+                   class="contact-button">
+                    Send Confirmation Email
+                </a>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    Include: Your name, amount, payment method, and preferred investment tier
+                </p>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--cream); border-radius: 10px;">
+                <h3 style="color: #6B4423; margin-bottom: 1rem;">💬 Questions?</h3>
+                <p style="margin-bottom: 1rem;">Contact Iain Barker directly:</p>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <div>📧 <strong>Email:</strong> ittrader@protonmail.com</div>
+                    <div>📱 <strong>Phone:</strong> 07376 909 228</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem; padding: 1.5rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h2 style="font-family: 'Playfair Display', serif; color: #6B4423; margin-bottom: 1rem; font-size: clamp(1.3rem, 4vw, 1.8rem);">
+                Thank You for Your Support! 🙏
+            </h2>
+            <p style="font-size: clamp(0.95rem, 2vw, 1.1rem); color: #666; max-width: 600px; margin: 0 auto;">
+                Every contribution brings us closer to automated manufacturing and making affordable solar tracking available to everyone. Together, we're building the future of renewable energy!
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function copyBankDetails() {
+            const text = `SGT Donation - Bank Details
+            
+Account Name: I S Barker
+Sort Code: 09-01-30
+Account Number: 11324979
+Bank: Santander UK
+
+Please include "SGT-[Your Name]" in the payment reference.`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        function copyBitcoinAddress() {
+            const address = 'bc1qatmk5qlarmdz9le97fyfhqzss0tf0g7nc95fc3';
+            
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
