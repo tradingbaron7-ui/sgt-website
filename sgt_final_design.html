@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(160deg, #0a0f1e 0%, #0d1f0d 60%, #0a0f1e 100%);
+            background: #0a0f1a;
             color: #fff;
             font-family: 'Georgia', serif;
             overflow: hidden;
@@ -18,18 +18,18 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0,0,0,0.78);
-            backdrop-filter: blur(12px);
+            background: rgba(0,0,0,0.80);
+            backdrop-filter: blur(14px);
             border: 1px solid rgba(255,184,28,0.4);
             border-radius: 16px;
             padding: 20px 24px;
-            max-width: 290px;
+            max-width: 285px;
         }
-        #ui h1 { font-size: 1.1rem; color: #FFB81C; margin-bottom: 4px; }
-        #ui .sub { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-bottom: 14px; font-family: sans-serif; }
-        .spec { font-family: sans-serif; font-size: 0.76rem; line-height: 2; color: rgba(255,255,255,0.8); border-top: 1px solid rgba(255,184,28,0.2); padding-top: 10px; }
+        #ui h1 { font-size: 1.1rem; color: #FFB81C; margin-bottom: 4px; letter-spacing: 0.4px; }
+        #ui .sub { font-size: 0.72rem; color: rgba(255,255,255,0.42); margin-bottom: 14px; font-family: sans-serif; }
+        .spec { font-family: sans-serif; font-size: 0.76rem; line-height: 2.1; color: rgba(255,255,255,0.82); border-top: 1px solid rgba(255,184,28,0.2); padding-top: 10px; }
         .spec span { color: #FFB81C; font-weight: 600; }
-        .hint { font-family: sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; line-height: 1.8; }
+        .hint { font-family: sans-serif; font-size: 0.69rem; color: rgba(255,255,255,0.32); margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; line-height: 1.9; }
         #btn-row { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         .btn { padding: 10px 20px; border: none; border-radius: 24px; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: all 0.25s; font-family: sans-serif; }
         .btn-gold { background: #FFB81C; color: #1a1a1a; }
@@ -50,7 +50,7 @@
     <h1>🌻 Sunflower Gimbal Tracker</h1>
     <div class="sub">Interactive 3D Model — Drag to rotate</div>
     <div class="spec">
-        <div>Petals: <span>8 Deployed Solar Panels</span></div>
+        <div>Petals: <span>10 Deployed Solar Panels</span></div>
         <div>Peak Power: <span>3,000W</span></div>
         <div>Diameter: <span>1.8m deployed</span></div>
         <div>Pole Height: <span>1.5m – 3.0m</span></div>
@@ -59,7 +59,7 @@
         <div>Cooling: <span>Water Pipe Circuit</span></div>
         <div>Tracking: <span>Dual-Axis Gimbal</span></div>
     </div>
-    <div class="hint">🖱 Drag — Rotate &nbsp;|&nbsp; Scroll — Zoom<br>📱 Touch supported<br>Buttons below — animate sun tracking</div>
+    <div class="hint">🖱 Drag — Rotate &nbsp;|&nbsp; Scroll — Zoom<br>📱 Touch supported<br>Buttons below animate sun tracking</div>
 </div>
 
 <div id="nav">
@@ -76,7 +76,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ── RENDERER & SCENE ───────────────────────────────────────────
+// ── RENDERER ───────────────────────────────────────────────────
 const canvas = document.getElementById('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -85,257 +85,259 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0a0f1a);
-scene.fog = new THREE.FogExp2(0x0a0f1a, 0.018);
+scene.background = new THREE.Color(0x080d18);
+scene.fog = new THREE.FogExp2(0x080d18, 0.016);
 
 const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 200);
 
 // ── LIGHTING ───────────────────────────────────────────────────
-const ambient = new THREE.AmbientLight(0xffffff, 0.55);
-scene.add(ambient);
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-const sun = new THREE.DirectionalLight(0xfff8e7, 1.6);
-sun.position.set(10, 16, 8);
+const sun = new THREE.DirectionalLight(0xfff8e7, 1.7);
+sun.position.set(10, 18, 8);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.left = -12; sun.shadow.camera.right = 12;
-sun.shadow.camera.top = 12; sun.shadow.camera.bottom = -12;
-sun.shadow.camera.far = 60;
+sun.shadow.camera.left = -14; sun.shadow.camera.right = 14;
+sun.shadow.camera.top = 14; sun.shadow.camera.bottom = -14;
+sun.shadow.camera.far = 70;
 scene.add(sun);
 
-const fill = new THREE.DirectionalLight(0xb0c8ff, 0.35);
+const fill = new THREE.DirectionalLight(0xa0c4ff, 0.38);
 fill.position.set(-8, 5, -5);
 scene.add(fill);
 
-const rimLight = new THREE.PointLight(0xFFB81C, 0.7, 25);
-rimLight.position.set(0, 10, -6);
+const rimLight = new THREE.PointLight(0xFFB81C, 0.65, 28);
+rimLight.position.set(0, 11, -7);
 scene.add(rimLight);
 
-// Subtle under-light to show pipe underside
-const underLight = new THREE.PointLight(0x204060, 0.8, 15);
-underLight.position.set(0, 2, 0);
+const underLight = new THREE.PointLight(0x203050, 0.7, 14);
+underLight.position.set(0, 1.5, 0);
 scene.add(underLight);
 
 // ── GROUND ─────────────────────────────────────────────────────
-const gndGeo = new THREE.CircleGeometry(14, 64);
-const gndMat = new THREE.MeshLambertMaterial({ color: 0x182818 });
-const gnd = new THREE.Mesh(gndGeo, gndMat);
+const gnd = new THREE.Mesh(
+    new THREE.CircleGeometry(15, 64),
+    new THREE.MeshLambertMaterial({ color: 0x141e14 })
+);
 gnd.rotation.x = -Math.PI / 2;
 gnd.receiveShadow = true;
 scene.add(gnd);
 
 // ── MATERIALS ──────────────────────────────────────────────────
-// Solar panel texture (dark navy, 4x6 grid cells)
+// Solar cell texture — dark navy with 4×6 grid, matching image
 function makeSolarTex() {
-    const sz = 512, cv = document.createElement('canvas');
+    const sz = 512;
+    const cv = document.createElement('canvas');
     cv.width = sz; cv.height = sz;
     const ctx = cv.getContext('2d');
-    // Base deep navy
-    ctx.fillStyle = '#0b1830'; ctx.fillRect(0, 0, sz, sz);
-    // Cell fill
-    const cols = 4, rows = 6;
-    const cw = sz / cols, ch = sz / rows;
-    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-        ctx.fillStyle = r % 2 === c % 2 ? '#0e1f3a' : '#0c1b33';
-        ctx.fillRect(c * cw + 2, r * ch + 2, cw - 4, ch - 4);
+    ctx.fillStyle = '#0a1628'; ctx.fillRect(0, 0, sz, sz);
+    const cols = 4, rows = 6, cw = sz / cols, ch = sz / rows;
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            ctx.fillStyle = (r + c) % 2 === 0 ? '#0d1e3c' : '#0b1a33';
+            ctx.fillRect(c * cw + 2, r * ch + 2, cw - 4, ch - 4);
+        }
     }
-    // Grid lines
-    ctx.strokeStyle = 'rgba(140,170,210,0.3)'; ctx.lineWidth = 1.5;
-    for (let i = 0; i <= cols; i++) { ctx.beginPath(); ctx.moveTo(i * cw, 0); ctx.lineTo(i * cw, sz); ctx.stroke(); }
-    for (let j = 0; j <= rows; j++) { ctx.beginPath(); ctx.moveTo(0, j * ch); ctx.lineTo(sz, j * ch); ctx.stroke(); }
-    // Reflection sheen
-    const g = ctx.createLinearGradient(0, 0, sz * 0.6, sz * 0.6);
-    g.addColorStop(0, 'rgba(120,160,220,0.10)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.strokeStyle = 'rgba(150,180,220,0.28)'; ctx.lineWidth = 1.5;
+    for (let i = 0; i <= cols; i++) { ctx.beginPath(); ctx.moveTo(i*cw,0); ctx.lineTo(i*cw,sz); ctx.stroke(); }
+    for (let j = 0; j <= rows; j++) { ctx.beginPath(); ctx.moveTo(0,j*ch); ctx.lineTo(sz,j*ch); ctx.stroke(); }
+    const g = ctx.createLinearGradient(0, 0, sz*0.55, sz*0.55);
+    g.addColorStop(0, 'rgba(110,155,210,0.09)'); g.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, sz, sz);
     return new THREE.CanvasTexture(cv);
 }
-
 const solarTex = makeSolarTex();
-const solarFaceMat = new THREE.MeshPhongMaterial({ map: solarTex, color: 0x1a2a4a, specular: 0x8899bb, shininess: 130, side: THREE.FrontSide });
-const petalBackMat = new THREE.MeshPhongMaterial({ color: 0x111518, specular: 0x222222, shininess: 20, side: THREE.FrontSide });
-const greenMat   = new THREE.MeshPhongMaterial({ color: 0x2e5c30, specular: 0x336633, shininess: 60 });
-const darkGrnMat = new THREE.MeshPhongMaterial({ color: 0x1e3c20, specular: 0x224422, shininess: 30 });
-const pipeMat    = new THREE.MeshPhongMaterial({ color: 0x111111, specular: 0x333333, shininess: 110 });
-const hubMat     = new THREE.MeshPhongMaterial({ color: 0x141414, specular: 0x2a2a2a, shininess: 80 });
-const boltMat    = new THREE.MeshPhongMaterial({ color: 0x777777, shininess: 120 });
+
+const solarFaceMat = new THREE.MeshPhongMaterial({ map: solarTex, color: 0x182a48, specular: 0x7799bb, shininess: 140, side: THREE.FrontSide });
+const petalBackMat = new THREE.MeshPhongMaterial({ color: 0x101418, specular: 0x1a1a1a, shininess: 18 });
+const greenMat     = new THREE.MeshPhongMaterial({ color: 0x2e5c30, specular: 0x334433, shininess: 65 });
+const darkGrnMat   = new THREE.MeshPhongMaterial({ color: 0x1d3c1e, specular: 0x223322, shininess: 35 });
+const pipeMat      = new THREE.MeshPhongMaterial({ color: 0x0f0f0f, specular: 0x2e2e2e, shininess: 110 });
+const hubMat       = new THREE.MeshPhongMaterial({ color: 0x111111, specular: 0x252525, shininess: 85 });
+const boltMat      = new THREE.MeshPhongMaterial({ color: 0x787878, shininess: 130 });
 
 // ── BASE PLATE ─────────────────────────────────────────────────
-const base = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.2, 0.14, 48), darkGrnMat);
+const base = new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.22, 0.14, 48), darkGrnMat);
 base.position.y = 0.07; base.castShadow = true; base.receiveShadow = true;
 scene.add(base);
-
-// Bolts
 for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2;
-    const b = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.042, 0.06, 8), boltMat);
-    b.position.set(Math.cos(a) * 0.9, 0.145, Math.sin(a) * 0.9);
-    scene.add(b);
+    const a = (i/6)*Math.PI*2;
+    const blt = new THREE.Mesh(new THREE.CylinderGeometry(0.044,0.044,0.06,8), boltMat);
+    blt.position.set(Math.cos(a)*0.92, 0.148, Math.sin(a)*0.92);
+    scene.add(blt);
 }
 
 // ── POLE ───────────────────────────────────────────────────────
 const POLE_H = 4.6;
 const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.21, POLE_H, 24), greenMat);
-pole.position.y = POLE_H / 2 + 0.14;
+pole.position.y = POLE_H/2 + 0.14;
 pole.castShadow = true;
 scene.add(pole);
-
-// Collar at top of pole
 const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.23, 0.22, 24), darkGrnMat);
 collar.position.y = POLE_H + 0.25;
 scene.add(collar);
 
-// ── HEAD GROUP (tilts to track sun) ────────────────────────────
+// ── HEAD GROUP ─────────────────────────────────────────────────
 const headGroup = new THREE.Group();
 headGroup.position.y = POLE_H + 0.36;
 scene.add(headGroup);
 
-// Centre hub disc
-const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.14, 40), hubMat);
+// Hub disc — the mounting plate petals attach to
+const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.65, 0.10, 40), hubMat);
 hub.castShadow = true;
 headGroup.add(hub);
 
-// ── SPIRAL COIL (centre water pipes — visible from top) ────────
-// Coil built as concentric torus rings — black water pipes
-const coilGroup = new THREE.Group();
-coilGroup.position.y = 0.08;
-headGroup.add(coilGroup);
-
+// ── FLAT COIL (water pipes at hub — all at same y, no protrusion) ──
+// All rings lie flat in the XZ plane at hub surface level
+const coilY = 0.055; // just sitting on top of hub, flush
 for (let i = 0; i < 7; i++) {
     const t = i / 6;
-    const r = 0.07 + t * 0.48;
-    const thick = 0.038 - t * 0.008;
-    const rg = new THREE.TorusGeometry(r, Math.max(thick, 0.018), 10, 48);
-    const coilRing = new THREE.Mesh(rg, new THREE.MeshPhongMaterial({
-        color: new THREE.Color().setHSL(0, 0, 0.10 + t * 0.08),
-        shininess: 90, specular: 0x3a3a3a
-    }));
-    coilRing.position.y = 0.06 - t * 0.012;
-    coilGroup.add(coilRing);
+    const r = 0.065 + t * 0.50;
+    const thickness = Math.max(0.036 - t * 0.009, 0.018);
+    const coilRing = new THREE.Mesh(
+        new THREE.TorusGeometry(r, thickness, 10, 52),
+        new THREE.MeshPhongMaterial({
+            color: new THREE.Color().setHSL(0, 0, 0.09 + t * 0.07),
+            shininess: 95, specular: 0x383838
+        })
+    );
+    // All rings at the SAME y height — completely flat, no stack
+    coilRing.rotation.x = Math.PI / 2; // lie flat in XZ plane
+    coilRing.position.y = coilY;
+    headGroup.add(coilRing);
 }
-// Centre nub
-const cnub = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 16),
-    new THREE.MeshPhongMaterial({ color: 0x0a0a0a, shininess: 130 }));
-cnub.position.y = 0.14;
-coilGroup.add(cnub);
+// Centre nub sits flush
+const cnub = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.065, 0.065, 0.05, 16),
+    new THREE.MeshPhongMaterial({ color: 0x080808, shininess: 120 })
+);
+cnub.position.y = coilY + 0.025;
+headGroup.add(cnub);
 
-// ── PETALS DEPLOYED (flat like a sunflower face) ───────────────
-// Petals lie nearly horizontal, radiating outward from hub
-// Each petal: solar face UP, back face DOWN, pipe running along back
-
+// ── PETAL SHAPE — hexagonal chamfer matching image ──────────────
+// Shape: rectangle with the two OUTER (top) corners chamfered at ~40°
+// Inner end (root) is straight, outer end has angled top corners
 function makePetalShape() {
-    // Rounded rectangle — wider at outer end, slightly tapered at root
+    const W = 0.86;   // width
+    const H = 1.30;   // height (radial length)
+    const C = 0.20;   // chamfer size on outer top corners
+    const Rb = 0.08;  // small rounding on inner bottom corners
+
     const shape = new THREE.Shape();
-    const W = 0.88, H = 1.35, R = 0.15;
-    const x = -W / 2;
-    shape.moveTo(x + R, 0);
-    shape.lineTo(x + W - R, 0);
-    shape.quadraticCurveTo(x + W, 0, x + W, R);
-    shape.lineTo(x + W, H - R);
-    shape.quadraticCurveTo(x + W, H, x + W - R, H);
-    shape.lineTo(x + R, H);
-    shape.quadraticCurveTo(x, H, x, H - R);
-    shape.lineTo(x, R);
-    shape.quadraticCurveTo(x, 0, x + R, 0);
+    // Start at bottom-left (inner/root end), go clockwise
+    shape.moveTo(-W/2 + Rb, 0);
+    // Bottom edge (inner end) — slightly rounded corners
+    shape.lineTo( W/2 - Rb, 0);
+    shape.quadraticCurveTo(W/2, 0, W/2, Rb);
+    // Right side — straight up
+    shape.lineTo(W/2, H - C);
+    // Top-right chamfer
+    shape.lineTo(W/2 - C, H);
+    // Top edge (outer/tip end)
+    shape.lineTo(-W/2 + C, H);
+    // Top-left chamfer
+    shape.lineTo(-W/2, H - C);
+    // Left side — straight down
+    shape.lineTo(-W/2, Rb);
+    // Bottom-left corner
+    shape.quadraticCurveTo(-W/2, 0, -W/2 + Rb, 0);
+
     return shape;
 }
 
-// Extrude with separate front/back material groups
-const extSettings = { depth: 0.030, bevelEnabled: true, bevelThickness: 0.010, bevelSize: 0.010, bevelSegments: 2 };
-const petalGeo = new THREE.ExtrudeGeometry(makePetalShape(), extSettings);
+const petalExtGeo = new THREE.ExtrudeGeometry(makePetalShape(), {
+    depth: 0.032,
+    bevelEnabled: true,
+    bevelThickness: 0.011,
+    bevelSize: 0.011,
+    bevelSegments: 3
+});
 
-const NUM_PETALS = 8;
-// Dish angle: petals tilt very slightly downward from centre (shallow dish = ~12 deg)
-const DISH_ANGLE = 0.21; // radians — slight downward tilt at outer edge
-// Deploy angle: petals are nearly horizontal, face pointing upward
-const DEPLOY_TILT = Math.PI / 2 - DISH_ANGLE; // from vertical = nearly flat
+// ── 10 PETALS DEPLOYED FLAT ────────────────────────────────────
+const NUM_PETALS = 10;
+const DISH_ANGLE = 0.18;  // very shallow dish — petals nearly flat
+const DEPLOY_TILT = Math.PI / 2 - DISH_ANGLE;
+const PIPE_R = 0.026;
 
 for (let i = 0; i < NUM_PETALS; i++) {
-    const angle = (i / NUM_PETALS) * Math.PI * 2 + Math.PI / 8;
+    const angle = (i / NUM_PETALS) * Math.PI * 2 + (Math.PI / NUM_PETALS);
 
     const pivot = new THREE.Group();
     pivot.rotation.y = angle;
     headGroup.add(pivot);
 
-    // Petal mesh — solar face (material index 0) faces UP
-    const petal = new THREE.Mesh(petalGeo, [solarFaceMat, petalBackMat]);
+    // Petal — solar face (mat[0]) faces upward, back (mat[1]) faces down
+    const petal = new THREE.Mesh(petalExtGeo, [solarFaceMat, petalBackMat]);
     petal.castShadow = true;
     petal.receiveShadow = true;
 
-    // Rotate petal to lie flat (face upward), extend outward along Z
-    petal.rotation.x = DEPLOY_TILT;  // lay flat, face up
-    // Offset outward from hub centre so inner edge kisses hub rim
-    petal.position.set(0, 0.06, 0.55);
+    // Lay petal flat (face up) and push it outward from centre
+    petal.rotation.x = DEPLOY_TILT;
+    petal.position.set(0, 0.04, 0.58);
 
     pivot.add(petal);
 
-    // ── WATER PIPE on back of each petal ──────────────────────
-    // Pipe runs along the length of the petal back face (U-shape)
-    // Two rails + a cross connector at outer end
+    // ── WATER PIPES on petal back ──────────────────────────────
+    const pZ  = 0.58;    // same as petal z offset
+    const pY  = -0.055;  // slightly below petal face (on back)
 
-    const PIPE_R = 0.028;
-    const pipeOffsetY = -0.06; // below petal (on back)
-    const pipeZ = 0.55;        // same offset as petal
-
-    // Left rail
-    const lRailGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 1.2, 10);
-    const lRail = new THREE.Mesh(lRailGeo, pipeMat);
+    // Left rail along petal length
+    const lRail = new THREE.Mesh(new THREE.CylinderGeometry(PIPE_R, PIPE_R, 1.18, 10), pipeMat);
     lRail.rotation.x = DEPLOY_TILT;
-    lRail.position.set(-0.24, pipeOffsetY, pipeZ + 0.3);
+    lRail.position.set(-0.22, pY, pZ + 0.28);
     pivot.add(lRail);
 
-    // Right rail
-    const rRail = lRail.clone();
-    rRail.position.set(0.24, pipeOffsetY, pipeZ + 0.3);
+    // Right rail along petal length
+    const rRail = new THREE.Mesh(new THREE.CylinderGeometry(PIPE_R, PIPE_R, 1.18, 10), pipeMat);
+    rRail.rotation.x = DEPLOY_TILT;
+    rRail.position.set(0.22, pY, pZ + 0.28);
     pivot.add(rRail);
 
-    // Outer cross connector
-    const crossGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.52, 10);
-    const cross = new THREE.Mesh(crossGeo, pipeMat);
-    cross.rotation.z = Math.PI / 2;
-    cross.rotation.x = DEPLOY_TILT;
-    cross.position.set(0, pipeOffsetY, pipeZ + 0.88);
-    pivot.add(cross);
+    // Outer cross connector at petal tip
+    const outerCross = new THREE.Mesh(new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.48, 10), pipeMat);
+    outerCross.rotation.z = Math.PI / 2;
+    outerCross.rotation.x = DEPLOY_TILT;
+    outerCross.position.set(0, pY, pZ + 0.85);
+    pivot.add(outerCross);
 
-    // Inner connector (connects petal pipes back to hub ring)
-    const inGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.52, 10);
-    const inConn = new THREE.Mesh(inGeo, pipeMat);
-    inConn.rotation.z = Math.PI / 2;
-    inConn.rotation.x = DEPLOY_TILT;
-    inConn.position.set(0, pipeOffsetY, pipeZ - 0.28);
-    pivot.add(inConn);
+    // Inner connector at root end
+    const innerCross = new THREE.Mesh(new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.48, 10), pipeMat);
+    innerCross.rotation.z = Math.PI / 2;
+    innerCross.rotation.x = DEPLOY_TILT;
+    innerCross.position.set(0, pY, pZ - 0.30);
+    pivot.add(innerCross);
 }
 
-// ── RING PIPE connecting all petals at hub underside ──────────
-// One black ring pipe circles the hub base — this is where all petal
-// pipes connect back to the central cooling circuit
-const ringPipeGeo = new THREE.TorusGeometry(0.70, 0.032, 12, 60);
-const ringPipe = new THREE.Mesh(ringPipeGeo, pipeMat);
-ringPipe.rotation.x = Math.PI / 2;
-ringPipe.position.y = -0.10;
-headGroup.add(ringPipe);
+// ── HUB RING PIPE — black ring connecting all petal circuits ───
+const hubRingPipe = new THREE.Mesh(
+    new THREE.TorusGeometry(0.72, 0.030, 12, 72),
+    pipeMat
+);
+hubRingPipe.rotation.x = Math.PI / 2;
+hubRingPipe.position.y = -0.08;
+headGroup.add(hubRingPipe);
 
-// Small connector pipes from ring to each petal base
+// Small connector stubs from ring pipe out to each petal root
 for (let i = 0; i < NUM_PETALS; i++) {
-    const angle = (i / NUM_PETALS) * Math.PI * 2 + Math.PI / 8;
-    const connGeo = new THREE.CylinderGeometry(0.022, 0.022, 0.22, 8);
-    const conn = new THREE.Mesh(connGeo, pipeMat);
-    conn.rotation.z = Math.PI / 2;
-    conn.position.set(Math.sin(angle) * 0.55, -0.08, Math.cos(angle) * 0.55);
-    conn.rotation.y = angle;
-    headGroup.add(conn);
+    const a = (i / NUM_PETALS) * Math.PI * 2 + (Math.PI / NUM_PETALS);
+    const stub = new THREE.Mesh(new THREE.CylinderGeometry(0.020, 0.020, 0.20, 8), pipeMat);
+    stub.rotation.z = Math.PI / 2;
+    stub.position.set(Math.sin(a) * 0.58, -0.07, Math.cos(a) * 0.58);
+    stub.rotation.y = a;
+    headGroup.add(stub);
 }
 
 // ── ORBIT CONTROL ──────────────────────────────────────────────
 let isDragging = false, prevMouse = { x: 0, y: 0 };
-let sph = { theta: 0.55, phi: 0.72, radius: 15 };
+let sph = { theta: 0.55, phi: 0.65, radius: 15 };
 
 function applyCamera() {
     camera.position.set(
         sph.radius * Math.sin(sph.phi) * Math.sin(sph.theta),
-        sph.radius * Math.cos(sph.phi) + 4,
+        sph.radius * Math.cos(sph.phi) + 4.2,
         sph.radius * Math.sin(sph.phi) * Math.cos(sph.theta)
     );
-    camera.lookAt(0, 4, 0);
+    camera.lookAt(0, 4.2, 0);
 }
 applyCamera();
 
@@ -344,12 +346,12 @@ window.addEventListener('mouseup', () => isDragging = false);
 canvas.addEventListener('mousemove', e => {
     if (!isDragging) return;
     sph.theta -= (e.clientX - prevMouse.x) * 0.007;
-    sph.phi = Math.max(0.12, Math.min(Math.PI * 0.78, sph.phi + (e.clientY - prevMouse.y) * 0.007));
+    sph.phi = Math.max(0.10, Math.min(Math.PI * 0.78, sph.phi + (e.clientY - prevMouse.y) * 0.007));
     prevMouse = { x: e.clientX, y: e.clientY };
     applyCamera();
 });
 canvas.addEventListener('wheel', e => {
-    sph.radius = Math.max(4, Math.min(32, sph.radius + e.deltaY * 0.02));
+    sph.radius = Math.max(4, Math.min(32, sph.radius + e.deltaY * 0.022));
     applyCamera();
 });
 let lastT = null;
@@ -358,34 +360,34 @@ canvas.addEventListener('touchmove', e => {
     if (!lastT) return;
     const t = e.touches[0];
     sph.theta -= (t.clientX - lastT.clientX) * 0.009;
-    sph.phi = Math.max(0.12, Math.min(Math.PI * 0.78, sph.phi + (t.clientY - lastT.clientY) * 0.009));
+    sph.phi = Math.max(0.10, Math.min(Math.PI * 0.78, sph.phi + (t.clientY - lastT.clientY) * 0.009));
     lastT = t; applyCamera(); e.preventDefault();
 }, { passive: false });
 
-// ── SUN TRACKING ANIMATIONS ────────────────────────────────────
+// ── SUN TRACKING ───────────────────────────────────────────────
 let targetTilt = 0, currentTilt = 0;
-function animateMorning() { targetTilt = -0.65; sph.theta = -0.7; sph.phi = 0.68; applyCamera(); }
-function animateNoon()    { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.55; applyCamera(); }
-function animateEvening() { targetTilt =  0.65; sph.theta =  1.85; sph.phi = 0.68; applyCamera(); }
-function resetView()      { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.72; sph.radius = 15; applyCamera(); }
+function animateMorning() { targetTilt = -0.62; sph.theta = -0.7;  sph.phi = 0.65; applyCamera(); }
+function animateNoon()    { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.42; applyCamera(); }
+function animateEvening() { targetTilt =  0.62; sph.theta =  1.85; sph.phi = 0.65; applyCamera(); }
+function resetView()      { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.65; sph.radius = 15; applyCamera(); }
 
 // ── RENDER LOOP ────────────────────────────────────────────────
 let time = 0;
-function loop() {
+(function loop() {
     requestAnimationFrame(loop);
     time += 0.007;
     currentTilt += (targetTilt - currentTilt) * 0.038;
     headGroup.rotation.z = currentTilt;
-    if (!isDragging) { sph.theta += 0.0008; applyCamera(); }
-    rimLight.intensity = 0.55 + Math.sin(time) * 0.12;
+    if (!isDragging) { sph.theta += 0.0007; applyCamera(); }
+    rimLight.intensity = 0.52 + Math.sin(time * 0.9) * 0.11;
     renderer.render(scene, camera);
-}
-loop();
+})();
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    applyCamera();
 });
 </script>
 </body>
