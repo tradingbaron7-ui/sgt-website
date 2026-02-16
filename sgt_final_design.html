@@ -3,803 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGT Final Design - Genuine Sunflower Petals</title>
+    <title>SGT 3D Model - Sunflower Gimbal Tracker</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(160deg, #0a0f1e 0%, #0d1f0d 60%, #0a0f1e 100%);
             color: #fff;
+            font-family: 'Georgia', serif;
             overflow: hidden;
+            height: 100vh;
         }
-        #container { width: 100vw; height: 100vh; position: relative; }
-        #canvas { width: 100%; height: 100%; display: block; }
-        
-        #controls {
+        #canvas { width: 100vw; height: 100vh; display: block; }
+        #ui {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.95);
-            padding: 22px;
-            border-radius: 15px;
-            backdrop-filter: blur(20px);
-            max-width: 380px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(0,0,0,0.78);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,184,28,0.4);
+            border-radius: 16px;
+            padding: 20px 24px;
+            max-width: 290px;
         }
-        
-        h1 {
-            font-size: 21px;
-            margin-bottom: 16px;
-            color: #ffd700;
-            text-shadow: 0 2px 15px rgba(255, 215, 0, 0.6);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 10px;
-        }
-        
-        .spec-panel {
-            background: rgba(255, 215, 0, 0.08);
-            padding: 14px;
-            border-radius: 10px;
-            margin: 14px 0;
-            border-left: 4px solid #ffd700;
-            font-size: 11px;
-            line-height: 1.8;
-        }
-        
-        .spec-title {
-            font-weight: 700;
-            color: #ffd700;
-            font-size: 12px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .control-group { margin-bottom: 16px; }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 11px;
-            color: #ffd700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 600;
-        }
-        
-        button {
-            width: 100%;
-            padding: 12px;
-            margin: 5px 0;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
-            color: white;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(243, 156, 18, 0.7);
-        }
-        
-        button.success {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.5);
-        }
-        
-        button.secondary {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
-        }
-        
-        input[type="range"] {
-            width: 100%;
-            margin: 10px 0;
-            height: 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.15);
-            outline: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ffd700;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.8);
-        }
-        
-        #info {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.95);
-            padding: 18px;
-            border-radius: 15px;
-            backdrop-filter: blur(20px);
-            max-width: 350px;
-            font-size: 11px;
-            line-height: 1.8;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        #stats {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(20px);
-            min-width: 340px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 8px 0;
-            font-size: 11px;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        }
-        
-        .stat-label { color: #ffd700; font-weight: 600; }
-        .stat-value { color: #fff; font-weight: 700; }
-        
-        .highlight { color: #27ae60; font-weight: 800; }
+        #ui h1 { font-size: 1.1rem; color: #FFB81C; margin-bottom: 4px; }
+        #ui .sub { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-bottom: 14px; font-family: sans-serif; }
+        .spec { font-family: sans-serif; font-size: 0.76rem; line-height: 2; color: rgba(255,255,255,0.8); border-top: 1px solid rgba(255,184,28,0.2); padding-top: 10px; }
+        .spec span { color: #FFB81C; font-weight: 600; }
+        .hint { font-family: sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; line-height: 1.8; }
+        #btn-row { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 10px 20px; border: none; border-radius: 24px; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: all 0.25s; font-family: sans-serif; }
+        .btn-gold { background: #FFB81C; color: #1a1a1a; }
+        .btn-gold:hover { background: #ffd060; transform: translateY(-2px); }
+        .btn-green { background: #2C5F2D; color: white; }
+        .btn-green:hover { background: #3a7a3b; transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: #FFB81C; border: 2px solid #FFB81C; }
+        .btn-outline:hover { background: rgba(255,184,28,0.12); transform: translateY(-2px); }
+        #nav { position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 8px; }
+        #nav a { display: block; padding: 8px 18px; background: rgba(0,0,0,0.65); color: #FFB81C; text-decoration: none; border-radius: 20px; font-size: 0.8rem; font-family: sans-serif; border: 1px solid rgba(255,184,28,0.3); text-align: center; transition: all 0.2s; }
+        #nav a:hover { background: rgba(255,184,28,0.15); }
     </style>
 </head>
 <body>
-    <div id="container">
-        <canvas id="canvas"></canvas>
-        
-        <div id="controls">
-            <h1>🌻 SGT Final Design</h1>
-            
-            <div class="spec-panel">
-                <div class="spec-title">System Specifications</div>
-                <strong>Total Power:</strong> 3000W (10×300W)<br>
-                <strong>Design:</strong> Genuine sunflower petals<br>
-                <strong>Diameter:</strong> 1.8m deployed<br>
-                <strong>Height:</strong> 1.5-3m adjustable<br>
-                <strong>Weight:</strong> 45kg complete
-            </div>
-            
-            <div class="control-group">
-                <button id="startBtn" class="success">▶ Start Assembly</button>
-                <button id="pauseBtn">⏸ Pause</button>
-                <button id="resetBtn" class="secondary">↺ Reset</button>
-            </div>
-            
-            <div class="control-group">
-                <label>Speed Control</label>
-                <input type="range" id="speedSlider" min="1" max="100" value="40">
-            </div>
-            
-            <div class="control-group">
-                <label>View & Features</label>
-                <button id="viewTopBtn">⬆ Top View</button>
-                <button id="viewSideBtn">↔ Side View</button>
-                <button id="toggleConeBtn">🌀 Toggle Cone</button>
-                <button id="togglePipesBtn">💧 Toggle Pipes</button>
-                <button id="foldBtn">📦 Fold/Deploy</button>
-                <button id="adjustHeightBtn">📏 Adjust Height</button>
-            </div>
-        </div>
-        
-        <div id="stats">
-            <h2 style="font-size: 15px; margin-bottom: 14px; color: #ffd700;">Assembly Status</h2>
-            <div class="stat-row">
-                <span class="stat-label">Phase:</span>
-                <span class="stat-value" id="currentPhase">Ready</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Task:</span>
-                <span class="stat-value" id="currentTask">Press Start</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Central Cone:</span>
-                <span class="stat-value" id="coneStatus">—</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Petals Mounted:</span>
-                <span class="stat-value" id="petalsStatus">0/10</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Edge Pipes:</span>
-                <span class="stat-value" id="pipesStatus">0/10</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Power Output:</span>
-                <span class="stat-value highlight" id="powerOutput">0W / 3000W</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Gimbal:</span>
-                <span class="stat-value" id="gimbalStatus">—</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Leg Height:</span>
-                <span class="stat-value" id="heightStatus">1.5m</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Status:</span>
-                <span class="stat-value" id="deployStatus">Folded</span>
-            </div>
-        </div>
-        
-        <div id="info">
-            <h2 style="font-size: 13px; margin-bottom: 12px; color: #ffd700;">Design Features</h2>
-            <p style="margin-bottom: 12px;"><strong>Genuine Sunflower Design</strong></p>
-            <p style="font-size: 10px; line-height: 1.9;">
-                ✓ <strong>Organic Petal Shape:</strong> Natural sunflower curves<br>
-                ✓ <strong>Minimal Gaps:</strong> Petals fit together tightly<br>
-                ✓ <strong>Wind Flow:</strong> Small gaps allow air through<br>
-                ✓ <strong>Edge Cooling:</strong> Black pipes around petals<br>
-                ✓ <strong>Compact Cone:</strong> Smaller central manifold<br>
-                ✓ <strong>Telescoping Leg:</strong> 1.5m-3m adjustable<br>
-                ✓ <strong>Gimbal Mount:</strong> 340° rotation, 90° tilt<br>
-                ✓ <strong>Folds to 40%:</strong> Easy transport
-            </p>
-        </div>
+<canvas id="canvas"></canvas>
+
+<div id="ui">
+    <h1>🌻 Sunflower Gimbal Tracker</h1>
+    <div class="sub">Interactive 3D Model — Drag to rotate</div>
+    <div class="spec">
+        <div>Petals: <span>8 Deployed Solar Panels</span></div>
+        <div>Peak Power: <span>3,000W</span></div>
+        <div>Diameter: <span>1.8m deployed</span></div>
+        <div>Pole Height: <span>1.5m – 3.0m</span></div>
+        <div>Weight: <span>45 kg</span></div>
+        <div>Grid-Tie: <span>Compatible</span></div>
+        <div>Cooling: <span>Water Pipe Circuit</span></div>
+        <div>Tracking: <span>Dual-Axis Gimbal</span></div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Scene
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x87CEEB);
-        scene.fog = new THREE.Fog(0x87CEEB, 2000, 4000);
-        
-        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 5000);
-        camera.position.set(1000, 800, 1000);
-        camera.lookAt(0, 0, 0);
-        
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas'), antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-        scene.add(ambientLight);
-        
-        const sunLight = new THREE.DirectionalLight(0xffffee, 1.5);
-        sunLight.position.set(600, 1000, 500);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        scene.add(sunLight);
-        
-        const skyLight = new THREE.HemisphereLight(0x87CEEB, 0x8B7355, 0.6);
-        scene.add(skyLight);
-        
-        // Ground
-        const groundGeom = new THREE.PlaneGeometry(3000, 3000);
-        const groundMat = new THREE.MeshStandardMaterial({ color: 0x8B7355, roughness: 0.9 });
-        const ground = new THREE.Mesh(groundGeom, groundMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -500;
-        ground.receiveShadow = true;
-        scene.add(ground);
-        
-        // Grid
-        const grid = new THREE.GridHelper(2000, 100, 0x666666, 0x999999);
-        grid.position.y = -499;
-        scene.add(grid);
-        
-        // Materials
-        const silverFrameMat = new THREE.MeshStandardMaterial({
-            color: 0xC0C0C0,
-            metalness: 0.8,
-            roughness: 0.25
-        });
-        
-        const solarCellMat = new THREE.MeshStandardMaterial({
-            color: 0x1a237e,
-            metalness: 0.5,
-            roughness: 0.5,
-            emissive: 0x283593,
-            emissiveIntensity: 0.4
-        });
-        
-        const blackPipeMat = new THREE.MeshStandardMaterial({
-            color: 0x0a0a0a,
-            metalness: 0.95,
-            roughness: 0.15
-        });
-        
-        const grayHubMat = new THREE.MeshStandardMaterial({
-            color: 0x424242,
-            metalness: 0.9,
-            roughness: 0.1
-        });
-        
-        // Components
-        let centralCone, gimbalJoint, telescopingLeg, baseplate;
-        const petals = [];
-        const edgePipes = [];
-        let coneVisible = true;
-        let pipesVisible = true;
-        let deployed = false;
-        let legHeight = 1.5; // meters
-        
-        // Create genuine sunflower petal shape (300W)
-        function createSunflowerPetal(index) {
-            const petalGroup = new THREE.Group();
-            
-            // Genuine sunflower petal shape - elongated teardrop
-            const petalShape = new THREE.Shape();
-            petalShape.moveTo(0, 0); // Base at center
-            
-            // Organic curved edges like real sunflower
-            petalShape.bezierCurveTo(80, 50, 140, 180, 160, 350); // Right side curve
-            petalShape.bezierCurveTo(120, 400, 80, 420, 0, 400); // Rounded tip
-            petalShape.bezierCurveTo(-80, 420, -120, 400, -160, 350); // Left side curve
-            petalShape.bezierCurveTo(-140, 180, -80, 50, 0, 0); // Back to base
-            
-            // Silver frame
-            const frameGeom = new THREE.ExtrudeGeometry(petalShape, {
-                depth: 12,
-                bevelEnabled: true,
-                bevelThickness: 3,
-                bevelSize: 2,
-                bevelSegments: 3
-            });
-            const frame = new THREE.Mesh(frameGeom, silverFrameMat);
-            frame.rotation.x = -Math.PI / 2;
-            frame.castShadow = true;
-            frame.receiveShadow = true;
-            petalGroup.add(frame);
-            
-            // Solar cells filling petal
-            const cellShape = new THREE.Shape();
-            cellShape.moveTo(0, 5);
-            cellShape.bezierCurveTo(70, 45, 125, 170, 145, 340);
-            cellShape.bezierCurveTo(110, 385, 75, 400, 0, 385);
-            cellShape.bezierCurveTo(-75, 400, -110, 385, -145, 340);
-            cellShape.bezierCurveTo(-125, 170, -70, 45, 0, 5);
-            
-            const cellsGeom = new THREE.ExtrudeGeometry(cellShape, { depth: 4, bevelEnabled: false });
-            const cells = new THREE.Mesh(cellsGeom, solarCellMat);
-            cells.rotation.x = -Math.PI / 2;
-            cells.position.y = 10;
-            cells.castShadow = true;
-            cells.receiveShadow = true;
-            petalGroup.add(cells);
-            
-            petalGroup.userData = {
-                index: index,
-                power: 300,
-                deployed: false,
-                edgePipe: null
-            };
-            
-            return petalGroup;
-        }
-        
-        // Create black edge pipe following petal curve
-        function createEdgePipe(petal) {
-            const pipeGroup = new THREE.Group();
-            const points = [];
-            
-            // Follow petal edge curve
-            for (let i = 0; i <= 50; i++) {
-                const t = i / 50;
-                const angle = t * Math.PI * 2;
-                
-                // Approximate petal edge
-                let x, z;
-                if (t < 0.5) {
-                    x = 160 * Math.sin(t * Math.PI);
-                    z = 400 * t;
-                } else {
-                    x = -160 * Math.sin((t - 0.5) * Math.PI);
-                    z = 400 * (1 - t);
-                }
-                
-                points.push(new THREE.Vector3(x, 12, z));
-            }
-            
-            const curve = new THREE.CatmullRomCurve3(points);
-            const tubeGeom = new THREE.TubeGeometry(curve, 50, 3.5, 8, false);
-            const tube = new THREE.Mesh(tubeGeom, blackPipeMat);
-            tube.castShadow = true;
-            pipeGroup.add(tube);
-            
-            return pipeGroup;
-        }
-        
-        // Create smaller central cone
-        function createCentralCone() {
-            const coneGroup = new THREE.Group();
-            const baseRadius = 50; // Smaller
-            const topRadius = 8;
-            const height = 120; // Shorter
-            const coils = 12;
-            const pipeRadius = 3;
-            
-            for (let i = 0; i < coils * 10; i++) {
-                const progress = i / (coils * 10);
-                const y = progress * height;
-                const radius = baseRadius - (baseRadius - topRadius) * progress;
-                const angle = progress * coils * 2 * Math.PI;
-                
-                const x = radius * Math.cos(angle);
-                const z = radius * Math.sin(angle);
-                
-                const segmentGeom = new THREE.SphereGeometry(pipeRadius, 6, 6);
-                const segment = new THREE.Mesh(segmentGeom, blackPipeMat);
-                segment.position.set(x, y, z);
-                segment.castShadow = true;
-                coneGroup.add(segment);
-            }
-            
-            coneGroup.position.y = 20;
-            return coneGroup;
-        }
-        
-        // Create gimbal joint
-        function createGimbal() {
-            const gimbalGroup = new THREE.Group();
-            
-            // Ball joint
-            const ballGeom = new THREE.SphereGeometry(35, 20, 20);
-            const ball = new THREE.Mesh(ballGeom, grayHubMat);
-            ball.castShadow = true;
-            gimbalGroup.add(ball);
-            
-            // Mounting ring
-            const ringGeom = new THREE.TorusGeometry(40, 6, 16, 32);
-            const ring = new THREE.Mesh(ringGeom, grayHubMat);
-            ring.rotation.x = Math.PI / 2;
-            ring.castShadow = true;
-            gimbalGroup.add(ring);
-            
-            return gimbalGroup;
-        }
-        
-        // Create telescoping leg
-        function createTelescopingLeg() {
-            const legGroup = new THREE.Group();
-            
-            // Three sections that telescope
-            const sections = [
-                { radius: 18, height: 500, color: 0x424242 },
-                { radius: 15, height: 500, color: 0x616161 },
-                { radius: 12, height: 500, color: 0x757575 }
-            ];
-            
-            sections.forEach((section, i) => {
-                const geom = new THREE.CylinderGeometry(section.radius, section.radius, section.height, 16);
-                const mat = new THREE.MeshStandardMaterial({ color: section.color, metalness: 0.9, roughness: 0.1 });
-                const seg = new THREE.Mesh(geom, mat);
-                seg.position.y = -i * 500 - 250;
-                seg.castShadow = true;
-                seg.userData.section = i;
-                legGroup.add(seg);
-            });
-            
-            return legGroup;
-        }
-        
-        // Create base plate
-        function createBasePlate() {
-            const baseGroup = new THREE.Group();
-            
-            const plateGeom = new THREE.CylinderGeometry(250, 260, 20, 32);
-            const plate = new THREE.Mesh(plateGeom, grayHubMat);
-            plate.position.y = -1490;
-            plate.castShadow = true;
-            plate.receiveShadow = true;
-            baseGroup.add(plate);
-            
-            // Mounting feet
-            for (let i = 0; i < 4; i++) {
-                const angle = (i / 4) * Math.PI * 2;
-                const footGeom = new THREE.BoxGeometry(40, 30, 80);
-                const foot = new THREE.Mesh(footGeom, grayHubMat);
-                foot.position.set(
-                    Math.cos(angle) * 220,
-                    -1505,
-                    Math.sin(angle) * 220
-                );
-                foot.rotation.y = angle;
-                foot.castShadow = true;
-                baseGroup.add(foot);
-            }
-            
-            return baseGroup;
-        }
-        
-        // Initialize
-        centralCone = createCentralCone();
-        scene.add(centralCone);
-        
-        gimbalJoint = createGimbal();
-        gimbalJoint.position.y = -20;
-        scene.add(gimbalJoint);
-        
-        telescopingLeg = createTelescopingLeg();
-        telescopingLeg.position.y = -50;
-        scene.add(telescopingLeg);
-        
-        baseplate = createBasePlate();
-        scene.add(baseplate);
-        
-        // Create 10 sunflower petals
-        const NUM_PETALS = 10;
-        const PETAL_RADIUS = 0; // Start at center
-        
-        for (let i = 0; i < NUM_PETALS; i++) {
-            const petal = createSunflowerPetal(i);
-            petal.position.set(0, 0, i * 15);
-            petal.userData.targetAngle = (i / NUM_PETALS) * Math.PI * 2;
-            scene.add(petal);
-            petals.push(petal);
-        }
-        
-        // Deploy petals in circular pattern (minimal gaps)
-        function deployPetals() {
-            petals.forEach((petal, i) => {
-                const angle = petal.userData.targetAngle;
-                const distance = 80; // Close to center for tight fit
-                const targetX = Math.cos(angle) * distance;
-                const targetZ = Math.sin(angle) * distance;
-                const targetRotY = angle;
-                
-                const duration = 2500;
-                const startTime = Date.now();
-                
-                function anim() {
-                    const elapsed = Date.now() - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    
-                    petal.position.x = targetX * eased;
-                    petal.position.z = (i * 15) + (targetZ - i * 15) * eased;
-                    petal.rotation.y = targetRotY * eased;
-                    
-                    if (progress < 1 && state.running) {
-                        requestAnimationFrame(anim);
-                    } else {
-                        petal.userData.deployed = true;
-                    }
-                }
-                anim();
-            });
-            deployed = true;
-            document.getElementById('deployStatus').textContent = 'Deployed ✓';
-        }
-        
-        // Fold petals
-        function foldPetals() {
-            petals.forEach((petal, i) => {
-                petal.position.set(0, 0, i * 15);
-                petal.rotation.y = 0;
-                petal.userData.deployed = false;
-            });
-            deployed = false;
-            document.getElementById('deployStatus').textContent = 'Folded';
-        }
-        
-        // Adjust leg height
-        function adjustHeight() {
-            legHeight = legHeight === 1.5 ? 3.0 : 1.5;
-            document.getElementById('heightStatus').textContent = legHeight.toFixed(1) + 'm';
-            
-            // Animate leg extension
-            const targetY = legHeight === 3.0 ? -50 : -800;
-            const startY = telescopingLeg.position.y;
-            const duration = 1500;
-            const startTime = Date.now();
-            
-            function anim() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                
-                telescopingLeg.position.y = startY + (targetY - startY) * eased;
-                
-                if (progress < 1) requestAnimationFrame(anim);
-            }
-            anim();
-        }
-        
-        // Assembly state
-        const state = {
-            running: false,
-            paused: false,
-            phase: 'cone',
-            coneDone: false,
-            petalsMounted: 0,
-            pipesMounted: 0,
-            gimbalInstalled: false,
-            speed: 40
-        };
-        
-        // Execute assembly
-        function executeAssembly() {
-            if (!state.running || state.paused) return;
-            
-            const delay = 800 / state.speed;
-            
-            if (state.phase === 'cone' && !state.coneDone) {
-                state.coneDone = true;
-                document.getElementById('coneStatus').textContent = 'Installed ✓';
-                document.getElementById('currentPhase').textContent = 'Mounting Petals';
-                state.phase = 'petals';
-                setTimeout(executeAssembly, delay);
-            } else if (state.phase === 'petals' && state.petalsMounted < 10) {
-                state.petalsMounted++;
-                const power = state.petalsMounted * 300;
-                document.getElementById('petalsStatus').textContent = `${state.petalsMounted}/10`;
-                document.getElementById('powerOutput').textContent = `${power}W / 3000W`;
-                document.getElementById('currentTask').textContent = `Mounting petal ${state.petalsMounted}`;
-                setTimeout(executeAssembly, delay * 2);
-            } else if (state.phase === 'petals' && state.petalsMounted >= 10) {
-                state.phase = 'pipes';
-                document.getElementById('currentPhase').textContent = 'Installing Edge Pipes';
-                setTimeout(executeAssembly, delay);
-            } else if (state.phase === 'pipes' && state.pipesMounted < 10) {
-                state.pipesMounted++;
-                document.getElementById('pipesStatus').textContent = `${state.pipesMounted}/10`;
-                document.getElementById('currentTask').textContent = `Installing edge pipe ${state.pipesMounted}`;
-                
-                // Add edge pipe visually
-                const pipe = createEdgePipe(petals[state.pipesMounted - 1]);
-                petals[state.pipesMounted - 1].add(pipe);
-                edgePipes.push(pipe);
-                
-                setTimeout(executeAssembly, delay);
-            } else if (state.phase === 'pipes' && state.pipesMounted >= 10) {
-                state.phase = 'gimbal';
-                document.getElementById('currentPhase').textContent = 'Installing Gimbal';
-                setTimeout(executeAssembly, delay);
-            } else if (state.phase === 'gimbal' && !state.gimbalInstalled) {
-                state.gimbalInstalled = true;
-                document.getElementById('gimbalStatus').textContent = 'Installed ✓';
-                state.phase = 'deploy';
-                document.getElementById('currentPhase').textContent = 'Deploying';
-                setTimeout(() => {
-                    deployPetals();
-                    setTimeout(() => {
-                        state.phase = 'complete';
-                        document.getElementById('currentPhase').textContent = 'Complete! 🌻';
-                        document.getElementById('currentTask').textContent = '3000W system ready!';
-                        state.running = false;
-                    }, 3000);
-                }, delay);
-            }
-        }
-        
-        // Controls
-        document.getElementById('startBtn').onclick = () => {
-            if (!state.running) {
-                state.running = true;
-                state.paused = false;
-                executeAssembly();
-            }
-        };
-        
-        document.getElementById('pauseBtn').onclick = () => {
-            state.paused = !state.paused;
-            document.getElementById('pauseBtn').textContent = state.paused ? '▶ Resume' : '⏸ Pause';
-            if (!state.paused && state.running) executeAssembly();
-        };
-        
-        document.getElementById('resetBtn').onclick = () => location.reload();
-        document.getElementById('speedSlider').oninput = (e) => state.speed = parseInt(e.target.value);
-        
-        document.getElementById('viewTopBtn').onclick = () => {
-            camera.position.set(0, 1500, 0);
-            camera.lookAt(0, 0, 0);
-        };
-        
-        document.getElementById('viewSideBtn').onclick = () => {
-            camera.position.set(1500, 300, 0);
-            camera.lookAt(0, 0, 0);
-        };
-        
-        document.getElementById('toggleConeBtn').onclick = () => {
-            coneVisible = !coneVisible;
-            centralCone.visible = coneVisible;
-        };
-        
-        document.getElementById('togglePipesBtn').onclick = () => {
-            pipesVisible = !pipesVisible;
-            edgePipes.forEach(pipe => pipe.visible = pipesVisible);
-        };
-        
-        document.getElementById('foldBtn').onclick = () => {
-            if (deployed) foldPetals();
-            else deployPetals();
-        };
-        
-        document.getElementById('adjustHeightBtn').onclick = adjustHeight;
-        
-        // Mouse
-        let isDragging = false;
-        let prevMouse = { x: 0, y: 0 };
-        let isRightClick = false;
-        
-        renderer.domElement.onmousedown = (e) => {
-            isDragging = true;
-            isRightClick = e.button === 2;
-            prevMouse = { x: e.clientX, y: e.clientY };
-        };
-        
-        renderer.domElement.onmousemove = (e) => {
-            if (!isDragging) return;
-            const dx = e.clientX - prevMouse.x;
-            const dy = e.clientY - prevMouse.y;
-            
-            if (isRightClick) {
-                camera.position.x -= dx * 1;
-                camera.position.y += dy * 1;
-            } else {
-                const speed = 0.005;
-                const radius = Math.sqrt(camera.position.x ** 2 + camera.position.z ** 2);
-                let theta = Math.atan2(camera.position.z, camera.position.x);
-                theta -= dx * speed;
-                camera.position.x = radius * Math.cos(theta);
-                camera.position.z = radius * Math.sin(theta);
-                camera.position.y = Math.max(100, camera.position.y - dy);
-                camera.lookAt(0, 0, 0);
-            }
-            prevMouse = { x: e.clientX, y: e.clientY };
-        };
-        
-        renderer.domElement.onmouseup = () => isDragging = false;
-        renderer.domElement.oncontextmenu = (e) => e.preventDefault();
-        
-        renderer.domElement.onwheel = (e) => {
-            e.preventDefault();
-            const dir = new THREE.Vector3();
-            camera.getWorldDirection(dir);
-            camera.position.addScaledVector(dir, -e.deltaY * 0.3);
-        };
-        
-        // Animate
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            if (deployed && gimbalJoint) {
-                gimbalJoint.rotation.y += 0.002;
-                petals.forEach((petal, i) => {
-                    if (petal.userData.deployed) {
-                        const angle = petal.userData.targetAngle + gimbalJoint.rotation.y;
-                        const x = Math.cos(angle) * 80;
-                        const z = Math.sin(angle) * 80;
-                        petal.position.x = x;
-                        petal.position.z = z;
-                        petal.rotation.y = angle;
-                    }
-                });
-            }
-            
-            if (centralCone) centralCone.rotation.y += 0.003;
-            
-            renderer.render(scene, camera);
-        }
-        animate();
-        
-        window.onresize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-    </script>
+    <div class="hint">🖱 Drag — Rotate &nbsp;|&nbsp; Scroll — Zoom<br>📱 Touch supported<br>Buttons below — animate sun tracking</div>
+</div>
+
+<div id="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="sgt_donate.html">💛 Invest</a>
+</div>
+
+<div id="btn-row">
+    <button class="btn btn-gold" onclick="animateMorning()">🌅 Morning</button>
+    <button class="btn btn-green" onclick="animateNoon()">☀️ Noon</button>
+    <button class="btn btn-gold" onclick="animateEvening()">🌇 Evening</button>
+    <button class="btn btn-outline" onclick="resetView()">⟳ Reset</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── RENDERER & SCENE ───────────────────────────────────────────
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0a0f1a);
+scene.fog = new THREE.FogExp2(0x0a0f1a, 0.018);
+
+const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 200);
+
+// ── LIGHTING ───────────────────────────────────────────────────
+const ambient = new THREE.AmbientLight(0xffffff, 0.55);
+scene.add(ambient);
+
+const sun = new THREE.DirectionalLight(0xfff8e7, 1.6);
+sun.position.set(10, 16, 8);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -12; sun.shadow.camera.right = 12;
+sun.shadow.camera.top = 12; sun.shadow.camera.bottom = -12;
+sun.shadow.camera.far = 60;
+scene.add(sun);
+
+const fill = new THREE.DirectionalLight(0xb0c8ff, 0.35);
+fill.position.set(-8, 5, -5);
+scene.add(fill);
+
+const rimLight = new THREE.PointLight(0xFFB81C, 0.7, 25);
+rimLight.position.set(0, 10, -6);
+scene.add(rimLight);
+
+// Subtle under-light to show pipe underside
+const underLight = new THREE.PointLight(0x204060, 0.8, 15);
+underLight.position.set(0, 2, 0);
+scene.add(underLight);
+
+// ── GROUND ─────────────────────────────────────────────────────
+const gndGeo = new THREE.CircleGeometry(14, 64);
+const gndMat = new THREE.MeshLambertMaterial({ color: 0x182818 });
+const gnd = new THREE.Mesh(gndGeo, gndMat);
+gnd.rotation.x = -Math.PI / 2;
+gnd.receiveShadow = true;
+scene.add(gnd);
+
+// ── MATERIALS ──────────────────────────────────────────────────
+// Solar panel texture (dark navy, 4x6 grid cells)
+function makeSolarTex() {
+    const sz = 512, cv = document.createElement('canvas');
+    cv.width = sz; cv.height = sz;
+    const ctx = cv.getContext('2d');
+    // Base deep navy
+    ctx.fillStyle = '#0b1830'; ctx.fillRect(0, 0, sz, sz);
+    // Cell fill
+    const cols = 4, rows = 6;
+    const cw = sz / cols, ch = sz / rows;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        ctx.fillStyle = r % 2 === c % 2 ? '#0e1f3a' : '#0c1b33';
+        ctx.fillRect(c * cw + 2, r * ch + 2, cw - 4, ch - 4);
+    }
+    // Grid lines
+    ctx.strokeStyle = 'rgba(140,170,210,0.3)'; ctx.lineWidth = 1.5;
+    for (let i = 0; i <= cols; i++) { ctx.beginPath(); ctx.moveTo(i * cw, 0); ctx.lineTo(i * cw, sz); ctx.stroke(); }
+    for (let j = 0; j <= rows; j++) { ctx.beginPath(); ctx.moveTo(0, j * ch); ctx.lineTo(sz, j * ch); ctx.stroke(); }
+    // Reflection sheen
+    const g = ctx.createLinearGradient(0, 0, sz * 0.6, sz * 0.6);
+    g.addColorStop(0, 'rgba(120,160,220,0.10)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, sz, sz);
+    return new THREE.CanvasTexture(cv);
+}
+
+const solarTex = makeSolarTex();
+const solarFaceMat = new THREE.MeshPhongMaterial({ map: solarTex, color: 0x1a2a4a, specular: 0x8899bb, shininess: 130, side: THREE.FrontSide });
+const petalBackMat = new THREE.MeshPhongMaterial({ color: 0x111518, specular: 0x222222, shininess: 20, side: THREE.FrontSide });
+const greenMat   = new THREE.MeshPhongMaterial({ color: 0x2e5c30, specular: 0x336633, shininess: 60 });
+const darkGrnMat = new THREE.MeshPhongMaterial({ color: 0x1e3c20, specular: 0x224422, shininess: 30 });
+const pipeMat    = new THREE.MeshPhongMaterial({ color: 0x111111, specular: 0x333333, shininess: 110 });
+const hubMat     = new THREE.MeshPhongMaterial({ color: 0x141414, specular: 0x2a2a2a, shininess: 80 });
+const boltMat    = new THREE.MeshPhongMaterial({ color: 0x777777, shininess: 120 });
+
+// ── BASE PLATE ─────────────────────────────────────────────────
+const base = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.2, 0.14, 48), darkGrnMat);
+base.position.y = 0.07; base.castShadow = true; base.receiveShadow = true;
+scene.add(base);
+
+// Bolts
+for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    const b = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.042, 0.06, 8), boltMat);
+    b.position.set(Math.cos(a) * 0.9, 0.145, Math.sin(a) * 0.9);
+    scene.add(b);
+}
+
+// ── POLE ───────────────────────────────────────────────────────
+const POLE_H = 4.6;
+const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.21, POLE_H, 24), greenMat);
+pole.position.y = POLE_H / 2 + 0.14;
+pole.castShadow = true;
+scene.add(pole);
+
+// Collar at top of pole
+const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.23, 0.22, 24), darkGrnMat);
+collar.position.y = POLE_H + 0.25;
+scene.add(collar);
+
+// ── HEAD GROUP (tilts to track sun) ────────────────────────────
+const headGroup = new THREE.Group();
+headGroup.position.y = POLE_H + 0.36;
+scene.add(headGroup);
+
+// Centre hub disc
+const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.14, 40), hubMat);
+hub.castShadow = true;
+headGroup.add(hub);
+
+// ── SPIRAL COIL (centre water pipes — visible from top) ────────
+// Coil built as concentric torus rings — black water pipes
+const coilGroup = new THREE.Group();
+coilGroup.position.y = 0.08;
+headGroup.add(coilGroup);
+
+for (let i = 0; i < 7; i++) {
+    const t = i / 6;
+    const r = 0.07 + t * 0.48;
+    const thick = 0.038 - t * 0.008;
+    const rg = new THREE.TorusGeometry(r, Math.max(thick, 0.018), 10, 48);
+    const coilRing = new THREE.Mesh(rg, new THREE.MeshPhongMaterial({
+        color: new THREE.Color().setHSL(0, 0, 0.10 + t * 0.08),
+        shininess: 90, specular: 0x3a3a3a
+    }));
+    coilRing.position.y = 0.06 - t * 0.012;
+    coilGroup.add(coilRing);
+}
+// Centre nub
+const cnub = new THREE.Mesh(new THREE.SphereGeometry(0.075, 16, 16),
+    new THREE.MeshPhongMaterial({ color: 0x0a0a0a, shininess: 130 }));
+cnub.position.y = 0.14;
+coilGroup.add(cnub);
+
+// ── PETALS DEPLOYED (flat like a sunflower face) ───────────────
+// Petals lie nearly horizontal, radiating outward from hub
+// Each petal: solar face UP, back face DOWN, pipe running along back
+
+function makePetalShape() {
+    // Rounded rectangle — wider at outer end, slightly tapered at root
+    const shape = new THREE.Shape();
+    const W = 0.88, H = 1.35, R = 0.15;
+    const x = -W / 2;
+    shape.moveTo(x + R, 0);
+    shape.lineTo(x + W - R, 0);
+    shape.quadraticCurveTo(x + W, 0, x + W, R);
+    shape.lineTo(x + W, H - R);
+    shape.quadraticCurveTo(x + W, H, x + W - R, H);
+    shape.lineTo(x + R, H);
+    shape.quadraticCurveTo(x, H, x, H - R);
+    shape.lineTo(x, R);
+    shape.quadraticCurveTo(x, 0, x + R, 0);
+    return shape;
+}
+
+// Extrude with separate front/back material groups
+const extSettings = { depth: 0.030, bevelEnabled: true, bevelThickness: 0.010, bevelSize: 0.010, bevelSegments: 2 };
+const petalGeo = new THREE.ExtrudeGeometry(makePetalShape(), extSettings);
+
+const NUM_PETALS = 8;
+// Dish angle: petals tilt very slightly downward from centre (shallow dish = ~12 deg)
+const DISH_ANGLE = 0.21; // radians — slight downward tilt at outer edge
+// Deploy angle: petals are nearly horizontal, face pointing upward
+const DEPLOY_TILT = Math.PI / 2 - DISH_ANGLE; // from vertical = nearly flat
+
+for (let i = 0; i < NUM_PETALS; i++) {
+    const angle = (i / NUM_PETALS) * Math.PI * 2 + Math.PI / 8;
+
+    const pivot = new THREE.Group();
+    pivot.rotation.y = angle;
+    headGroup.add(pivot);
+
+    // Petal mesh — solar face (material index 0) faces UP
+    const petal = new THREE.Mesh(petalGeo, [solarFaceMat, petalBackMat]);
+    petal.castShadow = true;
+    petal.receiveShadow = true;
+
+    // Rotate petal to lie flat (face upward), extend outward along Z
+    petal.rotation.x = DEPLOY_TILT;  // lay flat, face up
+    // Offset outward from hub centre so inner edge kisses hub rim
+    petal.position.set(0, 0.06, 0.55);
+
+    pivot.add(petal);
+
+    // ── WATER PIPE on back of each petal ──────────────────────
+    // Pipe runs along the length of the petal back face (U-shape)
+    // Two rails + a cross connector at outer end
+
+    const PIPE_R = 0.028;
+    const pipeOffsetY = -0.06; // below petal (on back)
+    const pipeZ = 0.55;        // same offset as petal
+
+    // Left rail
+    const lRailGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 1.2, 10);
+    const lRail = new THREE.Mesh(lRailGeo, pipeMat);
+    lRail.rotation.x = DEPLOY_TILT;
+    lRail.position.set(-0.24, pipeOffsetY, pipeZ + 0.3);
+    pivot.add(lRail);
+
+    // Right rail
+    const rRail = lRail.clone();
+    rRail.position.set(0.24, pipeOffsetY, pipeZ + 0.3);
+    pivot.add(rRail);
+
+    // Outer cross connector
+    const crossGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.52, 10);
+    const cross = new THREE.Mesh(crossGeo, pipeMat);
+    cross.rotation.z = Math.PI / 2;
+    cross.rotation.x = DEPLOY_TILT;
+    cross.position.set(0, pipeOffsetY, pipeZ + 0.88);
+    pivot.add(cross);
+
+    // Inner connector (connects petal pipes back to hub ring)
+    const inGeo = new THREE.CylinderGeometry(PIPE_R, PIPE_R, 0.52, 10);
+    const inConn = new THREE.Mesh(inGeo, pipeMat);
+    inConn.rotation.z = Math.PI / 2;
+    inConn.rotation.x = DEPLOY_TILT;
+    inConn.position.set(0, pipeOffsetY, pipeZ - 0.28);
+    pivot.add(inConn);
+}
+
+// ── RING PIPE connecting all petals at hub underside ──────────
+// One black ring pipe circles the hub base — this is where all petal
+// pipes connect back to the central cooling circuit
+const ringPipeGeo = new THREE.TorusGeometry(0.70, 0.032, 12, 60);
+const ringPipe = new THREE.Mesh(ringPipeGeo, pipeMat);
+ringPipe.rotation.x = Math.PI / 2;
+ringPipe.position.y = -0.10;
+headGroup.add(ringPipe);
+
+// Small connector pipes from ring to each petal base
+for (let i = 0; i < NUM_PETALS; i++) {
+    const angle = (i / NUM_PETALS) * Math.PI * 2 + Math.PI / 8;
+    const connGeo = new THREE.CylinderGeometry(0.022, 0.022, 0.22, 8);
+    const conn = new THREE.Mesh(connGeo, pipeMat);
+    conn.rotation.z = Math.PI / 2;
+    conn.position.set(Math.sin(angle) * 0.55, -0.08, Math.cos(angle) * 0.55);
+    conn.rotation.y = angle;
+    headGroup.add(conn);
+}
+
+// ── ORBIT CONTROL ──────────────────────────────────────────────
+let isDragging = false, prevMouse = { x: 0, y: 0 };
+let sph = { theta: 0.55, phi: 0.72, radius: 15 };
+
+function applyCamera() {
+    camera.position.set(
+        sph.radius * Math.sin(sph.phi) * Math.sin(sph.theta),
+        sph.radius * Math.cos(sph.phi) + 4,
+        sph.radius * Math.sin(sph.phi) * Math.cos(sph.theta)
+    );
+    camera.lookAt(0, 4, 0);
+}
+applyCamera();
+
+canvas.addEventListener('mousedown', e => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; });
+window.addEventListener('mouseup', () => isDragging = false);
+canvas.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    sph.theta -= (e.clientX - prevMouse.x) * 0.007;
+    sph.phi = Math.max(0.12, Math.min(Math.PI * 0.78, sph.phi + (e.clientY - prevMouse.y) * 0.007));
+    prevMouse = { x: e.clientX, y: e.clientY };
+    applyCamera();
+});
+canvas.addEventListener('wheel', e => {
+    sph.radius = Math.max(4, Math.min(32, sph.radius + e.deltaY * 0.02));
+    applyCamera();
+});
+let lastT = null;
+canvas.addEventListener('touchstart', e => lastT = e.touches[0]);
+canvas.addEventListener('touchmove', e => {
+    if (!lastT) return;
+    const t = e.touches[0];
+    sph.theta -= (t.clientX - lastT.clientX) * 0.009;
+    sph.phi = Math.max(0.12, Math.min(Math.PI * 0.78, sph.phi + (t.clientY - lastT.clientY) * 0.009));
+    lastT = t; applyCamera(); e.preventDefault();
+}, { passive: false });
+
+// ── SUN TRACKING ANIMATIONS ────────────────────────────────────
+let targetTilt = 0, currentTilt = 0;
+function animateMorning() { targetTilt = -0.65; sph.theta = -0.7; sph.phi = 0.68; applyCamera(); }
+function animateNoon()    { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.55; applyCamera(); }
+function animateEvening() { targetTilt =  0.65; sph.theta =  1.85; sph.phi = 0.68; applyCamera(); }
+function resetView()      { targetTilt =  0;    sph.theta =  0.55; sph.phi = 0.72; sph.radius = 15; applyCamera(); }
+
+// ── RENDER LOOP ────────────────────────────────────────────────
+let time = 0;
+function loop() {
+    requestAnimationFrame(loop);
+    time += 0.007;
+    currentTilt += (targetTilt - currentTilt) * 0.038;
+    headGroup.rotation.z = currentTilt;
+    if (!isDragging) { sph.theta += 0.0008; applyCamera(); }
+    rimLight.intensity = 0.55 + Math.sin(time) * 0.12;
+    renderer.render(scene, camera);
+}
+loop();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
 </body>
 </html>
