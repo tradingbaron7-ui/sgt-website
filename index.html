@@ -866,18 +866,60 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <p style="margin-top:1rem;"><a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp; <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#0d6479797f6c69687f4d7d7f62796263606c6461236e6260" style="color:var(--gold);text-decora
 <script>
 // ── DYNAMIC COUNTDOWN ──────────────────────────────────────────
-// End date = 45 days from 17 Feb 2026 (campaign launch date)
-const CAMPAIGN_END = new Date('2026-04-03T23:59:59');
+// Campaign ends April 3, 2026 at midnight GMT
+const CAMPAIGN_END_DATE = new Date('2026-04-03T00:00:00Z'); // Z = GMT/UTC
+
 function updateCountdown() {
-    const now = new Date();
-    const diff = CAMPAIGN_END - now;
-    const daysLeft = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+    // Get current time in GMT
+    const nowGMT = new Date();
+    
+    // Create midnight GMT today
+    const todayMidnightGMT = new Date(Date.UTC(
+        nowGMT.getUTCFullYear(),
+        nowGMT.getUTCMonth(),
+        nowGMT.getUTCDate(),
+        0, 0, 0, 0
+    ));
+    
+    // Calculate days remaining (full calendar days from today's midnight GMT to end date midnight GMT)
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const daysDiff = Math.floor((CAMPAIGN_END_DATE - todayMidnightGMT) / msPerDay);
+    const daysLeft = Math.max(0, daysDiff);
+    
     const el = document.getElementById('days-remaining');
     if (el) {
         el.textContent = daysLeft;
-        el.style.color = daysLeft <= 7 ? '#ff4444' : daysLeft <= 14 ? '#FFB81C' : '';
+        // Color coding: red if 7 or fewer days, amber if 14 or fewer
+        if (daysLeft <= 7) {
+            el.style.color = '#ff4444';
+        } else if (daysLeft <= 14) {
+            el.style.color = '#FFB81C';
+        } else {
+            el.style.color = '';
+        }
     }
 }
+
+// Update immediately on page load
 updateCountdown();
-setInterval(updateCountdown, 60000); // refresh every minute
+
+// Check every 10 minutes to catch midnight transition
+setInterval(updateCountdown, 600000); // 10 minutes in ms
+
+// Also force update at midnight GMT specifically
+function scheduleNextMidnightUpdate() {
+    const now = new Date();
+    const tomorrow = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + 1,
+        0, 0, 5, 0  // 5 seconds after midnight GMT to ensure day has rolled over
+    ));
+    const msUntilMidnight = tomorrow - now;
+    setTimeout(() => {
+        updateCountdown();
+        scheduleNextMidnightUpdate(); // Schedule next midnight update
+    }, msUntilMidnight);
+}
+scheduleNextMidnightUpdate();
 </script>
