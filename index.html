@@ -372,6 +372,59 @@
         .cta-bg p { color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto 2rem; }
 
         /* FOOTER */
+        /* GARDEN SHOWCASE */
+        .garden-showcase {
+            background: white;
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+        .garden-showcase img {
+            max-width: 900px;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            margin: 2rem auto;
+            display: block;
+        }
+        .garden-showcase h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+        .garden-showcase p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        .garden-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            align-items: center;
+        }
+        .garden-grid img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        .lifestyle-feature {
+            background: linear-gradient(135deg, rgba(255,184,28,0.1) 0%, rgba(232,156,49,0.1) 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: left;
+        }
+        .lifestyle-feature h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+
         footer { background: var(--dark); color: white; text-align: center; padding: 3rem 1.5rem; }
         footer p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
         footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
@@ -423,6 +476,27 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <p style="max-width:600px;margin:0 auto;text-align:center;color:#666;font-size:1rem;">
         1.8m diameter when deployed • Telescoping leg 1.5m–3m • 45kg total weight • Grid-tie compatible
     </p>
+</div>
+
+<!-- GARDEN LIFESTYLE SHOWCASE -->
+<div class="garden-showcase">
+    <h2>Beautiful, Functional, Sustainable</h2>
+    <p>The Sunflower Gimbal Tracker isn't just efficient technology — it's a stunning addition to any garden, home, or commercial space. See how our biomimetic design transforms outdoor spaces while generating clean energy.</p>
+    <img src="SGT_garden.png" alt="Sunflower Gimbal Tracker in a beautiful garden setting with flowers" loading="lazy">
+    <div class="garden-grid">
+        <div class="lifestyle-feature">
+            <h3>🌸 Garden-Friendly Design</h3>
+            <p>Our sunflower-inspired design complements natural landscapes beautifully. Unlike bulky traditional solar panels, the SGT becomes a decorative feature that enhances your outdoor space while producing clean energy.</p>
+        </div>
+        <div class="lifestyle-feature">
+            <h3>🏡 Perfect for Homes</h3>
+            <p>With its compact footprint and elegant appearance, the SGT fits seamlessly into residential gardens, patios, and yards. Generate power without compromising aesthetics.</p>
+        </div>
+        <div class="lifestyle-feature">
+            <h3>🌿 Eco-Conscious Living</h3>
+            <p>Join the renewable energy revolution with technology that looks as good as it performs. The SGT proves that sustainability and beauty can coexist.</p>
+        </div>
+    </div>
 </div>
 
 <!-- PROBLEM / SOLUTION -->
@@ -532,6 +606,10 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
         <p style="max-width:700px;margin:0 auto;color:#666;">
             From portable roof-rack units for adventures and off-grid use, to full-sized grid-tie systems for homes and businesses — the SGT range has a solution for every need and budget.
         </p>
+        <div style="margin:3rem auto 3rem;max-width:800px;text-align:center;">
+            <img src="SGT_garden.png" alt="SGT-250 Home model in garden" style="width:100%;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+            <p style="margin-top:1rem;font-style:italic;color:#888;">SGT-250 Home: Perfect for residential gardens and small businesses</p>
+        </div>
         <div class="range-grid">
             <div class="range-card">
                 <span class="range-icon">🚗</span>
@@ -719,17 +797,12 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
             <div><span class="crowd-stat-val">£8,500</span><div class="crowd-stat-lbl">Raised So Far</div></div>
             <div><span class="crowd-stat-val">14%</span><div class="crowd-stat-lbl">of £60,000 Goal</div></div>
             <div><span class="crowd-stat-val">2</span><div class="crowd-stat-lbl">Backers</div></div>
-            <script>
-var el = document.getElementById('days-remaining');
-if (el) {
-    var endTime = new Date('2026-04-03T00:00:00Z').getTime();
-    var nowTime = new Date().getTime();
-    var daysLeft = Math.floor((endTime - nowTime) / 86400000);
-    if (daysLeft >= 0) {
-        el.textContent = daysLeft;
-    }
-}
-</script>
+            <div><span class="crowd-stat-val" id="days-remaining">45</span><div class="crowd-stat-lbl">Days Remaining</div></div>
+        </div>
+
+        <div style="margin:3rem auto;max-width:700px;">
+            <img src="SGT_garden.png" alt="Support the Sunflower Gimbal Tracker" style="width:100%;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+            <p style="color:rgba(255,255,255,0.95);margin-top:1.5rem;font-size:1.05rem;text-align:center;font-style:italic;">Back this project and help us bring beautiful, efficient solar tracking to gardens and homes across the UK</p>
         </div>
 
         <h3 style="color:white;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:2rem;">Choose Your Investment Tier</h3>
@@ -839,6 +912,13 @@ if (el) {
             <div class="why-card"><h3>🇬🇧 UK-First Strategy</h3><p>We are building a British brand in a sector dominated by overseas manufacturers. Our UK production, UK jobs, and UK supply chain resonates with both consumers and institutional buyers who prioritise local sourcing and supply chain security.</p></div>
         </div>
     </div>
+    <div style="margin:4rem auto 0;max-width:900px;padding:0 1.5rem;">
+        <div style="background:white;padding:3rem;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1);">
+            <h3 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--green);margin-bottom:1.5rem;text-align:center;">More Than Just Technology</h3>
+            <img src="SGT_garden.png" alt="Sunflower Gimbal Tracker integrated beautifully in a garden" style="width:100%;border-radius:15px;margin-bottom:1.5rem;box-shadow:0 5px 20px rgba(0,0,0,0.1);">
+            <p style="text-align:center;font-size:1.1rem;color:#666;line-height:1.8;">The SGT transforms outdoor spaces into elegant power stations. Our investors aren't just backing technology — they're supporting a vision of sustainable living that's beautiful, practical, and accessible to everyone.</p>
+        </div>
+    </div>
 </div>
 
 <!-- FOUNDER -->
@@ -887,4 +967,3 @@ if (el) {
 </script>
 </body>
 </html>
-
