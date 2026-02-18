@@ -865,6 +865,18 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
     <p style="margin-top:1rem;"><a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp; <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#0d6479797f6c69687f4d7d7f62796263606c6461236e6260" style="color:var(--gold);text-decora
 
-<script>document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("days-remaining");if(e){var t=new Date("2026-04-03").getTime(),n=Math.floor((t-(new Date).getTime())/864e5);n>=0&&(e.textContent=n)}});</script>
+<script>
+(function(){
+    var el = document.getElementById('days-remaining');
+    if (el) {
+        var endTime = new Date('2026-04-03T00:00:00Z').getTime();
+        var nowTime = new Date().getTime();
+        var daysLeft = Math.floor((endTime - nowTime) / 86400000);
+        if (daysLeft >= 0) {
+            el.textContent = daysLeft;
+        }
+    }
+})();
+</script>
 </body>
 </html>
