@@ -482,7 +482,7 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
 <div class="garden-showcase">
     <h2>Beautiful, Functional, Sustainable</h2>
     <p>The Sunflower Gimbal Tracker isn't just efficient technology — it's a stunning addition to any garden, home, or commercial space. See how our biomimetic design transforms outdoor spaces while generating clean energy.</p>
-    <img src="SGT_garden.png" alt="Sunflower Gimbal Tracker in a beautiful garden setting with flowers" loading="lazy">
+    <img src="SGT_garden_clean.png" alt="Sunflower Gimbal Tracker in a beautiful garden setting with flowers" loading="lazy">
     <div class="garden-grid">
         <div class="lifestyle-feature">
             <h3>🌸 Garden-Friendly Design</h3>
@@ -607,7 +607,7 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
             From portable roof-rack units for adventures and off-grid use, to full-sized grid-tie systems for homes and businesses — the SGT range has a solution for every need and budget.
         </p>
         <div style="margin:3rem auto 3rem;max-width:800px;text-align:center;">
-            <img src="SGT_garden.png" alt="SGT-250 Home model in garden" style="width:100%;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+            <img src="SGT_garden_clean.png" alt="SGT-250 Home model in garden" style="width:100%;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
             <p style="margin-top:1rem;font-style:italic;color:#888;">SGT-250 Home: Perfect for residential gardens and small businesses</p>
         </div>
         <div class="range-grid">
@@ -797,11 +797,11 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
             <div><span class="crowd-stat-val">£8,500</span><div class="crowd-stat-lbl">Raised So Far</div></div>
             <div><span class="crowd-stat-val">14%</span><div class="crowd-stat-lbl">of £60,000 Goal</div></div>
             <div><span class="crowd-stat-val">2</span><div class="crowd-stat-lbl">Backers</div></div>
-            <div><span class="crowd-stat-val" id="days-remaining">45</span><div class="crowd-stat-lbl">Days Remaining</div></div>
+            <div><span class="crowd-stat-val" id="days-remaining">43</span><div class="crowd-stat-lbl">Days Remaining</div></div>
         </div>
 
         <div style="margin:3rem auto;max-width:700px;">
-            <img src="SGT_garden.png" alt="Support the Sunflower Gimbal Tracker" style="width:100%;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+            <img src="SGT_garden_clean.png" alt="Support the Sunflower Gimbal Tracker" style="width:100%;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
             <p style="color:rgba(255,255,255,0.95);margin-top:1.5rem;font-size:1.05rem;text-align:center;font-style:italic;">Back this project and help us bring beautiful, efficient solar tracking to gardens and homes across the UK</p>
         </div>
 
@@ -915,7 +915,7 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <div style="margin:4rem auto 0;max-width:900px;padding:0 1.5rem;">
         <div style="background:white;padding:3rem;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.1);">
             <h3 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--green);margin-bottom:1.5rem;text-align:center;">More Than Just Technology</h3>
-            <img src="SGT_garden.png" alt="Sunflower Gimbal Tracker integrated beautifully in a garden" style="width:100%;border-radius:15px;margin-bottom:1.5rem;box-shadow:0 5px 20px rgba(0,0,0,0.1);">
+            <img src="SGT_garden_clean.png" alt="Sunflower Gimbal Tracker integrated beautifully in a garden" style="width:100%;border-radius:15px;margin-bottom:1.5rem;box-shadow:0 5px 20px rgba(0,0,0,0.1);">
             <p style="text-align:center;font-size:1.1rem;color:#666;line-height:1.8;">The SGT transforms outdoor spaces into elegant power stations. Our investors aren't just backing technology — they're supporting a vision of sustainable living that's beautiful, practical, and accessible to everyone.</p>
         </div>
     </div>
@@ -955,15 +955,41 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
     <p style="margin-top:1rem;"><a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp; <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#0d6479797f6c69687f4d7d7f62796263606c6461236e6260" style="color:var(--gold);text-decora
 <script>
-var el = document.getElementById('days-remaining');
-if (el) {
-    var endTime = new Date('2026-04-03T00:00:00Z').getTime();
-    var nowTime = new Date().getTime();
-    var daysLeft = Math.floor((endTime - nowTime) / 86400000);
-    if (daysLeft >= 0) {
-        el.textContent = daysLeft;
+// Countdown to April 3, 2026 GMT
+(function() {
+    function updateCountdown() {
+        var el = document.getElementById('days-remaining');
+        if (!el) return;
+        
+        var now = new Date();
+        var endDate = new Date('2026-04-03T00:00:00Z');
+        var msRemaining = endDate.getTime() - now.getTime();
+        var daysLeft = Math.floor(msRemaining / 86400000);
+        
+        if (daysLeft >= 0) {
+            el.textContent = daysLeft;
+        } else {
+            el.textContent = '0';
+        }
     }
-}
+    
+    // Update immediately
+    updateCountdown();
+    
+    // Update at midnight GMT every day
+    function scheduleNextUpdate() {
+        var now = new Date();
+        var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        var msUntilMidnight = tomorrow.getTime() - now.getTime();
+        
+        setTimeout(function() {
+            updateCountdown();
+            scheduleNextUpdate();
+        }, msUntilMidnight);
+    }
+    
+    scheduleNextUpdate();
+})();
 </script>
 </body>
 </html>
