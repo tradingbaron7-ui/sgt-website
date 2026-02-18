@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -721,6 +722,11 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
             <div><span class="crowd-stat-val">2</span><div class="crowd-stat-lbl">Backers</div></div>
             <div><span class="crowd-stat-val" id="days-remaining">45</span><div class="crowd-stat-lbl">Days Remaining</div></div>
         </div>
+        
+        <!-- DEBUG MESSAGE -->
+        <div id="countdown-debug" style="background:#ff0000;color:#fff;padding:10px;margin:20px auto;max-width:600px;border-radius:8px;font-family:monospace;font-size:14px;display:none;">
+            <strong>DEBUG:</strong> <span id="debug-text">Checking JavaScript...</span>
+        </div>
 
         <h3 style="color:white;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:2rem;">Choose Your Investment Tier</h3>
 
@@ -865,28 +871,72 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
     <p style="margin-top:1rem;"><a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp; <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#0d6479797f6c69687f4d7d7f62796263606c6461236e6260" style="color:var(--gold);text-decora
 <script>
-// Campaign countdown - ends April 3, 2026 midnight GMT
-(function() {
+// Campaign countdown - DEBUGGING VERSION
+try {
+    console.log('=== COUNTDOWN SCRIPT STARTING ===');
+    
+    // Show debug div
+    const debugDiv = document.getElementById('countdown-debug');
+    const debugText = document.getElementById('debug-text');
+    if (debugDiv) debugDiv.style.display = 'block';
+    if (debugText) debugText.textContent = 'Script is running...';
+    
     const endDate = new Date('2026-04-03T00:00:00Z');
     const now = new Date();
     
-    // Get days between now and end date
+    console.log('End date:', endDate);
+    console.log('Now:', now);
+    
     const timeDiff = endDate.getTime() - now.getTime();
     const daysRemaining = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     
-    // Update the display
+    console.log('Time difference (ms):', timeDiff);
+    console.log('Days remaining:', daysRemaining);
+    
+    if (debugText) {
+        debugText.textContent = 'Calculated days: ' + daysRemaining + ' | Now: ' + now.toISOString().substring(0,10);
+    }
+    
     const element = document.getElementById('days-remaining');
+    console.log('Element found:', element);
+    
     if (element && daysRemaining >= 0) {
+        console.log('Updating element from', element.textContent, 'to', daysRemaining);
         element.textContent = daysRemaining;
+        element.style.fontWeight = 'bold';
         
         // Color coding
         if (daysRemaining <= 7) {
             element.style.color = '#ff4444';
         } else if (daysRemaining <= 14) {
             element.style.color = '#FFB81C';
+        } else {
+            element.style.color = '#00ff00'; // GREEN to see it changed
+        }
+        
+        if (debugText) {
+            debugText.textContent = 'SUCCESS! Updated to ' + daysRemaining + ' days. If still showing 45, browser cache issue.';
+        }
+        
+        console.log('=== COUNTDOWN UPDATE SUCCESSFUL ===');
+        
+        // Hide debug after 3 seconds if successful
+        setTimeout(() => {
+            if (debugDiv) debugDiv.style.display = 'none';
+        }, 3000);
+    } else {
+        console.error('Element not found or days remaining negative!');
+        if (debugText) {
+            debugText.textContent = 'ERROR: Element not found or negative days!';
         }
     }
-})();
+} catch(e) {
+    console.error('=== COUNTDOWN ERROR ===', e);
+    const debugText = document.getElementById('debug-text');
+    if (debugText) {
+        debugText.textContent = 'ERROR: ' + e.message;
+    }
+}
 </script>
 <!-- Version: v2.1 - Fixed Countdown - Feb 18, 2026 -->
 </body>
