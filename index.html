@@ -954,47 +954,42 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-logo">🌻 Sunflower Gimbal Tracker</div>
-    <p>Bringing affordable, efficient, beautiful solar tracking to everyone.</p>
-    <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
-    <p style="margin-top:1rem;"><a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp; <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#0d6479797f6c69687f4d7d7f62796263606c6461236e6260" style="color:var(--gold);text-decora
-<script>
-// Countdown to April 3, 2026 GMT
-(function() {
-    function updateCountdown() {
-        var el = document.getElementById('days-remaining');
-        if (!el) return;
-        
-        var now = new Date();
-        var endDate = new Date('2026-04-03T00:00:00Z');
-        var msRemaining = endDate.getTime() - now.getTime();
-        var daysLeft = Math.floor(msRemaining / 86400000);
-        
-        if (daysLeft >= 0) {
-            el.textContent = daysLeft;
-        } else {
-            el.textContent = '0';
+        <div class="footer-logo">🌻 Sunflower Gimbal Tracker</div>
+        <p>Bringing affordable, efficient, beautiful solar tracking to everyone.</p>
+        <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
+
+        <p style="margin-top:1rem; font-size:1.1rem;">
+            ⏳ <strong><span id="days-remaining" style="color:var(--gold); font-size:1.8rem;">--</span></strong>
+            <span style="color:var(--gold);">days until April 3, 2026</span>
+        </p>
+
+        <p style="margin-top:1rem;">
+            <a href="sgt_donate.html" style="color:var(--gold);text-decoration:none;">Donate</a> &nbsp;|&nbsp;
+            <a href="sgt_final_design.html" style="color:var(--gold);text-decoration:none;">3D Design</a> &nbsp;|&nbsp;
+            <a href="mailto:your@email.com" style="color:var(--gold);text-decoration:none;">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+    (function() {
+        function updateCountdown() {
+            var el = document.getElementById('days-remaining');
+            if (!el) return;
+            var msRemaining = new Date('2026-04-03T00:00:00Z').getTime() - new Date().getTime();
+            el.textContent = msRemaining > 0 ? Math.floor(msRemaining / 86400000) : '0';
         }
-    }
-    
-    // Update immediately
-    updateCountdown();
-    
-    // Update at midnight GMT every day
-    function scheduleNextUpdate() {
-        var now = new Date();
-        var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-        var msUntilMidnight = tomorrow.getTime() - now.getTime();
-        
-        setTimeout(function() {
-            updateCountdown();
-            scheduleNextUpdate();
-        }, msUntilMidnight);
-    }
-    
-    scheduleNextUpdate();
-})();
-</script>
+        updateCountdown();
+        function scheduleNextUpdate() {
+            var now = new Date();
+            var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            setTimeout(function() { updateCountdown(); scheduleNextUpdate(); }, tomorrow - now);
+        }
+        scheduleNextUpdate();
+    })();
+    </script>
+
 </body>
 </html>
+
+
 
