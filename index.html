@@ -953,14 +953,21 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
 </div>
 
 <!-- FOOTER -->
-<footer>
+ <footer>
         <div class="footer-logo">🌻 Sunflower Gimbal Tracker</div>
         <p>Bringing affordable, efficient, beautiful solar tracking to everyone.</p>
         <p style="margin-top:0.5rem;">UK Designed & Manufactured | Grid-Tie Compatible | Biomimetic Technology</p>
 
-        <p style="margin-top:1rem; font-size:1.1rem;">
-            ⏳ <strong><span id="days-remaining" style="color:var(--gold); font-size:1.8rem;">--</span></strong>
-            <span style="color:var(--gold);">days until April 3, 2026</span>
+        <p style="margin-top:1rem; font-size:1.1rem; color:var(--gold);">
+            ⏳ Launch Countdown:
+        </p>
+        <p style="margin-top:0.3rem;">
+            <span style="color:var(--gold); font-size:1.8rem; font-weight:bold;">
+                <span id="days-remaining">--</span>d 
+                <span id="hours-remaining">--</span>h 
+                <span id="minutes-remaining">--</span>m
+            </span>
+            <span style="color:var(--gold);"> until April 3, 2026</span>
         </p>
 
         <p style="margin-top:1rem;">
@@ -973,23 +980,37 @@ iVBORw0KGgoAAAANSUhEUgAAA0AAAATgCAYAAADe2CIiAAEAAElEQVR4nOzdd7ycdZ33/9fVp59+cpJA
     <script>
     (function() {
         function updateCountdown() {
-            var el = document.getElementById('days-remaining');
-            if (!el) return;
+            var dEl = document.getElementById('days-remaining');
+            var hEl = document.getElementById('hours-remaining');
+            var mEl = document.getElementById('minutes-remaining');
+            if (!dEl || !hEl || !mEl) return;
+
             var msRemaining = new Date('2026-04-03T00:00:00Z').getTime() - new Date().getTime();
-            el.textContent = msRemaining > 0 ? Math.floor(msRemaining / 86400000) : '0';
+
+            if (msRemaining <= 0) {
+                dEl.textContent = '0'; hEl.textContent = '00'; mEl.textContent = '00';
+                return;
+            }
+
+            var totalMinutes = Math.floor(msRemaining / 60000);
+            var totalHours   = Math.floor(totalMinutes / 60);
+            var days         = Math.floor(totalHours / 24);
+            var hours        = totalHours % 24;
+            var minutes      = totalMinutes % 60;
+
+            dEl.textContent = days;
+            hEl.textContent = String(hours).padStart(2, '0');
+            mEl.textContent = String(minutes).padStart(2, '0');
         }
+
         updateCountdown();
-        function scheduleNextUpdate() {
-            var now = new Date();
-            var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-            setTimeout(function() { updateCountdown(); scheduleNextUpdate(); }, tomorrow - now);
-        }
-        scheduleNextUpdate();
+        setInterval(updateCountdown, 60000); // update every minute
     })();
     </script>
 
 </body>
 </html>
+
 
 
 
